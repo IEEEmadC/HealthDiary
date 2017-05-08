@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">"Health diary "</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="titleOfFirstNavBarChoice">Log symptoms</string>
+    <string name="titleOfSecondNavBarChoice">Body</string>
+    <string name="titleOfThirdNavBarChoice">Statistics</string>
+    <string name="titleOfFourthNavBarChoice">Symptoms history</string>
+    <string name="titleOfFifthNavBarChoice">Body history</string>
+    <string name="titleofFirstNavBarToolsChoice">Health institutions</string>
+    <string name="titleofSecondNavBarToolsChoice">Therapy reminder</string>
+    <string name="titleOfThirdNavBarToolsChoice">Camera log</string>
+</resources>
