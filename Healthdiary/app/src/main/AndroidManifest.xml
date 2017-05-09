@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SymptomLogActivity"></activity>
+        <activity android:name=".SymptomLogActivity" />
+        <activity android:name=".AddSymptomInfo"></activity>
     </application>
 
 </manifest>

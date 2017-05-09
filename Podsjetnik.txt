@@ -1,0 +1,2 @@
+Layout: title bar i back button
+	Landscape orientation

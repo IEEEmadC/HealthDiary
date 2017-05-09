@@ -6,4 +6,107 @@
     android:layout_height="match_parent"
     tools:context="hr.ferit.mdudjak.healthdiary.SymptomLogActivity">
 
+   <TextView
+       android:id="@+id/txtPainAreaTitle"
+       android:layout_width="@dimen/textViewWidth"
+       android:layout_height="@dimen/textViewHeight"
+       android:gravity="center"
+       android:layout_marginTop="@dimen/topMarginForLogTextViews"
+       android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+       android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+       android:text="Area of pain:              e.g. Head"
+       android:background="@color/colorForLogTitle"
+       />
+    <ImageButton
+        android:id="@+id/bAddPainArea"
+        android:layout_below="@id/txtPainAreaTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/textViewHeight"
+        android:src="@drawable/ic_button_add"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:background="@color/colorForLogInput"/>
+
+    <TextView
+        android:id="@+id/txtPainAreaLog"
+        android:layout_below="@+id/txtPainAreaTitle"
+        android:layout_toRightOf="@+id/bAddPainArea"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+
+        android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+        android:text="Add area"
+        android:gravity="center"
+        android:background="@color/colorForLogInput"
+        />
+
+    <TextView
+        android:id="@+id/txtPainDescriptionTitle"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+        android:gravity="center"
+        android:layout_below="@id/txtPainAreaLog"
+        android:layout_marginTop="@dimen/topMarginForLogTextViews"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+        android:text="Pain description:   e.g. Acute"
+        android:background="@color/colorForLogTitle"
+        />
+    <ImageButton
+        android:id="@+id/bAddPainDescription"
+        android:layout_below="@id/txtPainDescriptionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/textViewHeight"
+        android:src="@drawable/ic_button_add"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:background="@color/colorForLogInput"/>
+
+    <TextView
+        android:id="@+id/txtPainDescriptionLog"
+        android:layout_below="@+id/txtPainDescriptionTitle"
+        android:layout_toRightOf="@+id/bAddPainDescription"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+        android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+        android:text="Add description"
+        android:gravity="center"
+        android:background="@color/colorForLogInput"
+        />
+    <TextView
+        android:id="@+id/txtPainIntensityTitle"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+        android:gravity="center"
+        android:layout_below="@id/txtPainDescriptionLog"
+        android:layout_marginTop="@dimen/topMarginForLogTextViews"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+        android:text="Pain intensity"
+        android:background="@color/colorForLogTitle"
+        />
+
+    <EditText
+        android:id="@+id/etPainIntensityLog"
+        android:layout_below="@+id/txtPainIntensityTitle"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:layout_marginRight="@dimen/sideMarginForLogTextViews"
+        android:hint="Input number from 1-10"
+        android:inputType="number"
+        android:gravity="center"
+        android:background="@color/colorForLogInput"
+        />
+
+    <Button
+        android:id="@+id/bAddSymptom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPainIntensityLog"
+        android:layout_marginTop="@dimen/topMarginForLogTextViews"
+        android:gravity="center"
+        android:text="Add Symptom"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/buttonPadding"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

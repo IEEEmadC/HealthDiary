@@ -13,4 +13,12 @@
     <string name="titleofFirstNavBarToolsChoice">Health institutions</string>
     <string name="titleofSecondNavBarToolsChoice">Therapy reminder</string>
     <string name="titleOfThirdNavBarToolsChoice">Camera log</string>
+    <string name="title_activity_add_pain_area">AddPainArea</string>
+    <string name="title_activity_add_symptom_info">AddSymptomInfo</string>
+    <string name="hintForAreaInput">Input area </string>
+    <string name="txtTitleForAreaMissing">Can\'t find appropriate area?\nAdd your own!</string>
+    <string name="txtTitleForDescriptionMissing">Can\'t find appropriate description?\nAdd your own!</string>
+    <string name="hintForDescriptionInput">Input description</string>
+    <string name="hintForAreaSearch">Search area</string>
+    <string name="hintForDescriptionSearch">Search description</string>
 </resources>
