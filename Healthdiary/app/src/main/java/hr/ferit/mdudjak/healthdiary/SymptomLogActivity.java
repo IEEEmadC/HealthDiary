@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class SymptomLogActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_AREA = 1;
@@ -18,10 +20,13 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
     public static final String AREA_RESULT = "area_result";
     public static final String DESCRIPTION_RESULT ="description_result";
     ImageButton bAddArea, bAddDescription;
+    int i=0;
     Button bAddSymptom;
     TextView txtAreaLog, txtDescriptionLog;
     TextView txtAreaLogTitle, txtDescriptionLogTitle;
+    TextView bzvz;
     EditText etPainIntensity;
+    String area=null, description=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
         this.bAddDescription.setOnClickListener(this);
         this.bAddArea.setOnClickListener(this);
         this.bAddSymptom.setOnClickListener(this);
+        this.bzvz= (TextView) this.findViewById(R.id.bzvz);
     }
 
     @Override
@@ -57,10 +63,23 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                 this.startActivityForResult(intent, REQUEST_DESCRIPTION);
                 break;
             case (R.id.bAddSymptom):
-                //Prije spremanja simptoma u bazu provjeriti jel ima sve podatke
                 String sPainIntensity = etPainIntensity.getText().toString();
                 int iPainIntensity = Integer.parseInt(sPainIntensity);
-                if(iPainIntensity>10 || iPainIntensity<1) etPainIntensity.setError("Please enter a number from 1 to 10.");
+                if(iPainIntensity>10 || iPainIntensity<1 || etPainIntensity.getText().toString().isEmpty()){
+                    etPainIntensity.setError("Please enter a number from 1 to 10.");
+                }
+                else{
+                    if((area!=null)&&(description!=null)){
+                        Symptom newSymptom = new Symptom(area,description,iPainIntensity);
+                        DBHelper.getInstance(getApplicationContext()).insertSymptom(newSymptom);
+                        ArrayList<Symptom> symptom = new ArrayList<>();
+                        symptom=DBHelper.getInstance(this).getAllSymptoms();
+                        int id= symptom.get(i).getID();
+                        i++;
+                        String idd= String.valueOf(id);
+                        this.bzvz.setText(idd);
+                    }
+                }
                 break;
         }
     }
@@ -71,7 +90,7 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
         switch (requestCode) {
             case REQUEST_AREA:
                 if (resultCode == RESULT_OK) {
-                    String area = String.valueOf(data.getStringExtra(AREA_RESULT));
+                     area = String.valueOf(data.getStringExtra(AREA_RESULT));
                     this.txtAreaLog.setText(area);
                     this.txtAreaLogTitle.setText("Area of pain:");
                     //Riješiti spremanje simptoma u bazu, sprema se i area i description zajedno u ovaj activity
@@ -79,7 +98,7 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                 break;
             case REQUEST_DESCRIPTION:
                 if (resultCode == RESULT_OK) {
-                    String description = String.valueOf(data.getStringExtra(DESCRIPTION_RESULT));
+                    description = String.valueOf(data.getStringExtra(DESCRIPTION_RESULT));
                     this.txtDescriptionLog.setText(description);
                     this.txtDescriptionLogTitle.setText("Pain description:");
                     //Riješiti spremanje simptoma u bazu, sprema se i area i description zajedno u ovaj activity

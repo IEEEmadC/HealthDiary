@@ -68,6 +68,7 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+
         InputMethodManager imm = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         int i;
@@ -128,6 +129,7 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
         String result = adapter.getItem(position).toString();
         Intent resultIntent = new Intent();
@@ -143,5 +145,7 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
                 this.finish();
                 break;
         }
+
     }
+
 }
