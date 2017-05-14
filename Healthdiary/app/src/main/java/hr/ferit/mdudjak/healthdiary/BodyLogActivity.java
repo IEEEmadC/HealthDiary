@@ -1,5 +1,8 @@
 package hr.ferit.mdudjak.healthdiary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,10 +58,60 @@ public class BodyLogActivity extends AppCompatActivity implements View.OnClickLi
                 etBodyPressureLower.setError("Please input realistic body pressure");
             } else {
                     //Spremanje u bazu
-                BodyLog bodyLog = new BodyLog(fWeight,iHeartRate,fBloodSugar,iBodyPressureUpper,iBodyPressureLower);
-                DBHelper.getInstance(getApplicationContext()).insertBodyLog(bodyLog);
+                final BodyLog bodyLog = new BodyLog(fWeight,iHeartRate,fBloodSugar,iBodyPressureUpper,iBodyPressureLower);
+                AlertDialog.Builder dialogBuilderForSaving = new AlertDialog.Builder(this);
+                final AlertDialog.Builder dialogBuilderAfterSaving = new AlertDialog.Builder(this);
+                final Intent historyIntent = new Intent(this, BodyLogsHistory.class);
+                dialogBuilderForSaving.setMessage(R.string.BodyLogToSaveDialogMessage);
+                dialogBuilderForSaving.setCancelable(true);
+                dialogBuilderForSaving.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                DBHelper.getInstance(getApplicationContext()).insertBodyLog(bodyLog);
+                                dialogBuilderAfterSaving.setMessage(R.string.BodyLogDialogMessage);
+                                dialogBuilderAfterSaving.setCancelable(true);
+
+                                dialogBuilderAfterSaving.setPositiveButton(
+                                        "Yes",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                startActivity(historyIntent);
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                dialogBuilderAfterSaving.setNegativeButton(
+                                        "No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //LOG i.
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                AlertDialog alertDialog = dialogBuilderAfterSaving.create();
+                                alertDialog.show();
+                                dialog.cancel();
+                            }
+                        });
+
+                dialogBuilderForSaving.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //LOG i.
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = dialogBuilderForSaving.create();
+                alertDialog.show();
+
             }
         }
-    }
-    }
+            }
+}
+
+
 

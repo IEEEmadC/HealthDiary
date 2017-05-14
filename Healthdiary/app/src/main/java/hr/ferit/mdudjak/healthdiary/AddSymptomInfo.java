@@ -1,5 +1,7 @@
 package hr.ferit.mdudjak.healthdiary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -131,21 +133,49 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         ArrayAdapter<String> adapter = (ArrayAdapter<String>) parent.getAdapter();
-        String result = adapter.getItem(position).toString();
-        Intent resultIntent = new Intent();
+        final String result = adapter.getItem(position).toString();
+        final Intent resultIntent = new Intent();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setCancelable(true);
+        dialogBuilder.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+
         switch (parent.getId()) {
             case(R.id.areaList):
-            resultIntent.putExtra(SymptomLogActivity.AREA_RESULT, result);
-            this.setResult(RESULT_OK, resultIntent);
-            this.finish();
+                dialogBuilder.setMessage(R.string.AreaLogDialogMessage);
+                dialogBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                resultIntent.putExtra(SymptomLogActivity.AREA_RESULT, result);
+                                AddSymptomInfo.this.setResult(RESULT_OK, resultIntent);
+                                AddSymptomInfo.this.finish();
+                                dialog.cancel();
+                            }
+                        });
                 break;
             case(R.id.descriptionList):
-                resultIntent.putExtra(SymptomLogActivity.DESCRIPTION_RESULT, result);
-                this.setResult(RESULT_OK, resultIntent);
-                this.finish();
+                dialogBuilder.setMessage(R.string.DescriptionLogDialogMessage);
+                dialogBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                resultIntent.putExtra(SymptomLogActivity.DESCRIPTION_RESULT, result);
+                                AddSymptomInfo.this.setResult(RESULT_OK, resultIntent);
+                                AddSymptomInfo.this.finish();
+                                dialog.cancel();
+                            }
+                        });
                 break;
         }
-
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
     }
 
 }

@@ -121,9 +121,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void insertDescription(String description){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Schema.AREA,description);
-        SQLiteDatabase writeableDatabse = this.getWritableDatabase();
-        writeableDatabse.insert(Schema.TABLE_SYMPTOMS_DESCRIPTIONS,Schema.DESCRIPTION,contentValues);
-        writeableDatabse.close();
+        SQLiteDatabase writableDatabse = this.getWritableDatabase();
+        writableDatabse.insert(Schema.TABLE_SYMPTOMS_DESCRIPTIONS,Schema.DESCRIPTION,contentValues);
+        writableDatabse.close();
     }
 
     public void insertBodyLog(BodyLog bodyLog){
@@ -133,9 +133,9 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.BLOOD_SUGAR,bodyLog.getBloodSugar());
         contentValues.put(Schema.UPPER_PRESSURE,bodyLog.getUpperPressure());
         contentValues.put(Schema.LOWER_PRESSURE,bodyLog.getLowerPressure());
-        SQLiteDatabase writableDatabse = this.getWritableDatabase();
-        writableDatabse.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
-        writableDatabse.close();
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.close();
     }
 
     public ArrayList<String> getAllAreas(){
@@ -196,8 +196,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 int ID = taskCursor.getInt(0);
                 float weight = taskCursor.getFloat(1);
                 int hearRate=taskCursor.getInt(2);
-                float bloodSugar = taskCursor.getFloat(4);
-                int upperPressure = taskCursor.getInt(5);
+                float bloodSugar = taskCursor.getFloat(3);
+                int upperPressure = taskCursor.getInt(4);
                 int lowePressure = taskCursor.getInt(5);
                 bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowePressure,ID));
             }while(taskCursor.moveToNext());

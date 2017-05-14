@@ -1,5 +1,7 @@
 package hr.ferit.mdudjak.healthdiary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,7 +53,7 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, AddSymptomInfo.class);
+        final Intent intent = new Intent(this, AddSymptomInfo.class);
         switch (v.getId()) {
             case (R.id.bAddPainArea):
                 intent.putExtra(KEY_REQUEST_AREA,REQUEST_AREA);
@@ -67,13 +69,62 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                 }
                 else {
                     String sPainIntensity = etPainIntensity.getText().toString();
-                    int iPainIntensity = Integer.parseInt(sPainIntensity);
+                    final int iPainIntensity = Integer.parseInt(sPainIntensity);
                     if (iPainIntensity > 10 || iPainIntensity < 1 || etPainIntensity.getText().toString().isEmpty()) {
                         etPainIntensity.setError("Please enter a number from 1 to 10.");
                     } else {
                         if ((area != null) && (description != null)) {
-                            Symptom newSymptom = new Symptom(area, description, iPainIntensity);
-                            DBHelper.getInstance(getApplicationContext()).insertSymptom(newSymptom);
+                            final Symptom newSymptom = new Symptom(area, description, iPainIntensity);
+                            AlertDialog.Builder dialogBuilderForSaving = new AlertDialog.Builder(this);
+                            final AlertDialog.Builder dialogBuilderAfterSaving = new AlertDialog.Builder(this);
+                            final Intent historyIntent = new Intent(this, SymptomsHistory.class);
+                            dialogBuilderForSaving.setMessage(R.string.SymptomLogToSaveDialogMessage);
+                            dialogBuilderForSaving.setCancelable(true);
+                            dialogBuilderForSaving.setPositiveButton(
+                                    "Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            DBHelper.getInstance(getApplicationContext()).insertSymptom(newSymptom);
+
+                                            dialogBuilderAfterSaving.setMessage(R.string.SymptomLogDialogMessage);
+                                            dialogBuilderAfterSaving.setCancelable(true);
+
+                                            dialogBuilderAfterSaving.setPositiveButton(
+                                                    "Yes",
+                                                    new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            startActivity(historyIntent);
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+
+                                            dialogBuilderAfterSaving.setNegativeButton(
+                                                    "No",
+                                                    new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            //LOG i.
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+
+                                            AlertDialog alertDialog = dialogBuilderAfterSaving.create();
+                                            alertDialog.show();
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            dialogBuilderForSaving.setNegativeButton(
+                                    "No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            //LOG i.
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog alertDialog = dialogBuilderForSaving.create();
+                            alertDialog.show();
+
                         }
                     }
                 }

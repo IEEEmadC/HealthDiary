@@ -36,4 +36,10 @@
     <string name="HeartRateHistoryTitle">Heart rate:</string>
     <string name="BloodSugarHistoryTitle">Blood sugar:</string>
     <string name="BodyPressureHistoryTitle">Body pressure:</string>
+    <string name="SymptomLogDialogMessage">Symptom log is added to history of your symptom logs. Do you want to check it in a log history?</string>
+    <string name="SymptomLogToSaveDialogMessage">Do you want to add your symptom information?</string>
+    <string name="BodyLogToSaveDialogMessage">Do you want add your body information?</string>
+    <string name="BodyLogDialogMessage">Body log is added to history of your body variables logs. Do you want to check it in a log history?</string>
+    <string name="AreaLogDialogMessage">Do you want to add selected area to your symptom info?</string>
+    <string name="DescriptionLogDialogMessage">Do you want to add selected description to your symptom info?</string>
 </resources>
