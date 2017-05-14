@@ -21,4 +21,19 @@
     <string name="hintForDescriptionInput">Input description</string>
     <string name="hintForAreaSearch">Search area</string>
     <string name="hintForDescriptionSearch">Search description</string>
+    <string name="AddWeightTitle">Weight (kg)</string>
+    <string name="AddWeightHint">Add weight</string>
+    <string name="AddHeartRateTitle">Heart rate (rpm)</string>
+    <string name="AddHeartRateHint">Add heart rate</string>
+    <string name="AddBloodSugarTitle">Blood sugar (mmol/L)</string>
+    <string name="AddBloodSugarTitleHint">Add blood sugar</string>
+    <string name="AddBodyPressureTitle">Body pressure (mm/Hg)</string>
+    <string name="AddBodyPressureHint">Add body pressure</string>
+    <string name="bAddBodyLogText">Submit</string>
+    <string name="AddUpperBodyPressureHint">Add upper body pressure</string>
+    <string name="AddLowerBodyPressureHint">Add lower body pressure</string>
+    <string name="WeightHistoryTitle">Weight:</string>
+    <string name="HeartRateHistoryTitle">Heart rate:</string>
+    <string name="BloodSugarHistoryTitle">Blood sugar:</string>
+    <string name="BodyPressureHistoryTitle">Body pressure:</string>
 </resources>

@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_symptomLog"
-            android:icon="@drawable/ic_menu_camera"
+
             android:title="@string/titleOfFirstNavBarChoice" />
         <item
             android:id="@+id/nav_bodyLog"
-            android:icon="@drawable/ic_menu_gallery"
+
             android:title="@string/titleOfSecondNavBarChoice" />
         <item
             android:id="@+id/nav_statistics"
@@ -16,11 +16,11 @@
             android:title="@string/titleOfThirdNavBarChoice" />
         <item
             android:id="@+id/nav_symptomHistory"
-            android:icon="@drawable/ic_menu_manage"
+
             android:title="@string/titleOfFourthNavBarChoice" />
         <item
             android:id="@+id/nav_bodyHistory"
-            android:icon="@drawable/ic_menu_manage"
+
             android:title="@string/titleOfFifthNavBarChoice" />
     </group>
 
@@ -28,11 +28,11 @@
         <menu>
             <item
                 android:id="@+id/nav_HealthInstitutions"
-                android:icon="@drawable/ic_menu_share"
+
                 android:title="@string/titleofFirstNavBarToolsChoice" />
             <item
                 android:id="@+id/nav_TherapyReminder"
-                android:icon="@drawable/ic_menu_send"
+
                 android:title="@string/titleofSecondNavBarToolsChoice" />
             <item
                 android:id="@+id/nav_CameraLog"

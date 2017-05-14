@@ -88,13 +88,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent = new Intent(this, SymptomLogActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_bodyLog) {
-
+            intent = new Intent(this, BodyLogActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_statistics) {
 
         } else if (id == R.id.nav_symptomHistory) {
-
+            intent = new Intent(this, SymptomsHistory.class);
+            startActivity(intent);
         } else if (id == R.id.nav_bodyHistory) {
-
+            intent = new Intent(this, BodyLogsHistory.class);
+            startActivity(intent);
         } else if (id == R.id.nav_HealthInstitutions) {
 
         } else if (id == R.id.nav_TherapyReminder) {

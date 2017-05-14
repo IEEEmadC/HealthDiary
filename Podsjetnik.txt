@@ -1,2 +1,8 @@
 Layout: title bar i back button
 	Landscape orientation
+Eksternalizacija stringova
+Body varijable i za American i European
+Dijalog za submitanje simtpoma i body loga.
+Datum za naslov u History.
+Healthy tip of the day na poruci u MainActivity.
+Brisanje iz baze.

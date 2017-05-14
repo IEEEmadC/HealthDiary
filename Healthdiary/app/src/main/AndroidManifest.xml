@@ -20,7 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SymptomLogActivity" />
-        <activity android:name=".AddSymptomInfo"></activity>
+        <activity android:name=".AddSymptomInfo" />
+        <activity android:name=".SymptomsHistory" />
+        <activity android:name=".BodyLogActivity" />
+        <activity android:name=".BodyLogsHistory"></activity>
     </application>
 
 </manifest>

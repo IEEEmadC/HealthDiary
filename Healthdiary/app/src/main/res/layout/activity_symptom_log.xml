@@ -110,10 +110,4 @@
         android:padding="@dimen/buttonPadding"
         android:layout_centerHorizontal="true"/>
 
- <TextView
-     android:id="@+id/bzvz"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:text="bzvz"
-     android:layout_below="@+id/bAddSymptom"/>
 </RelativeLayout>

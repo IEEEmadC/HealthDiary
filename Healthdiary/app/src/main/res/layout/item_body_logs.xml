@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/paddingForTextViews">
+    <LinearLayout
+        android:id="@+id/llWeightHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvWeightHistoryTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/WeightHistoryTitle"
+            />
+        <TextView
+            android:id="@+id/tvBodyLogWeight"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. 80"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvWeightHistoryTitle"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHeartRateHistory"
+        android:layout_below="@+id/llWeightHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvHeartRateHistoryTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/HeartRateHistoryTitle"
+            />
+        <TextView
+            android:id="@+id/tvBodyLogHeartRate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. 80"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvHeartRateHistoryTitle"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBloodSugarHistory"
+        android:layout_below="@+id/llHeartRateHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvBloodSugarHistoryTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/BloodSugarHistoryTitle"
+            />
+        <TextView
+            android:id="@+id/tvBodyLogBloodSugar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. 5.4"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvBloodSugarHistoryTitle"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBodyPressureHistory"
+        android:layout_below="@+id/llBloodSugarHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvBodyPressureHistoryTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/BodyPressureHistoryTitle"
+            />
+        <TextView
+            android:id="@+id/tvBodyLogBodyPressure"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. 120/80"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvBodyPressureHistoryTitle"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

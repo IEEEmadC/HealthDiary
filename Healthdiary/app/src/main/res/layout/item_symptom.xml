@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/paddingForTextViews">
+    <LinearLayout
+        android:id="@+id/llAreaHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvSymptomAreaText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Area: "
+            />
+        <TextView
+            android:id="@+id/tvSymptomArea"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. Head"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvSymptomAreaText"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDescriptionHistory"
+        android:layout_below="@+id/llAreaHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvSymptomDescriptionText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Description: "
+            />
+        <TextView
+            android:id="@+id/tvSymptomDescription"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. Buzzing"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvSymptomDescriptionText"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llIntensityHistory"
+        android:layout_below="@+id/llDescriptionHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/tvSymptomIntensityText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Intensity: "
+            />
+        <TextView
+            android:id="@+id/tvSymptomIntensity"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="e.g. 5"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvSymptomIntensityText"
+            />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

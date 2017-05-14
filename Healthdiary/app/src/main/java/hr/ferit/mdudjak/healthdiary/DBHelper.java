@@ -28,11 +28,17 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String SELECT_ALL_SYMPTOM_DESCRIPTIONS ="SELECT " + Schema.DESCRIPTION + " FROM " + Schema.TABLE_SYMPTOMS_DESCRIPTIONS;
 
     static final String CREATE_TABLE_SYMPTOMS = "CREATE TABLE " + Schema.TABLE_SYMPTOMS +
-            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTO_INCREMENT, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.INTENSITY + " INTEGER);";
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.INTENSITY + " INTEGER);";
     static final String DROP_TABLE_SYMPTOMS = "DROP TABLE IF EXISTS " + Schema.TABLE_SYMPTOMS;
     static final String SELECT_ALL_SYMPTOMS = "SELECT " + Schema.ID + "," + Schema.AREA + "," + Schema.DESCRIPTION + ","
             +
             Schema.INTENSITY + " FROM " + Schema.TABLE_SYMPTOMS;
+
+    static final String CREATE_TABLE_BODY_LOGS = "CREATE TABLE " + Schema.TABLE_BODY_LOGS +
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.WEIGHT + " REAL," + Schema.HEART_RATE + " INTEGER," + Schema.BLOOD_SUGAR + " REAL,"+ Schema.UPPER_PRESSURE + " INTEGER,"+ Schema.LOWER_PRESSURE + " INTEGER);";
+    static final String DROP_TABLE_BODY_LOGS = "DROP TABLE IF EXISTS " + Schema.TABLE_BODY_LOGS;
+    static final String SELECT_ALL_BODY_LOGS = "SELECT " + Schema.ID + "," + Schema.WEIGHT + "," + Schema.HEART_RATE + ","
+            + Schema.BLOOD_SUGAR + "," + Schema.UPPER_PRESSURE + "," + Schema.LOWER_PRESSURE + " FROM " + Schema.TABLE_BODY_LOGS;
 
     private DBHelper (Context context){
         super(context.getApplicationContext(),Schema.DATABASE_NAME,null,Schema.SCHEMA_VERSION);
@@ -49,6 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SYMPTOM_AREAS);
         db.execSQL(CREATE_TABLE_SYMPTOM_DESCRIPTIONS);
         db.execSQL(CREATE_TABLE_SYMPTOMS);
+        db.execSQL(CREATE_TABLE_BODY_LOGS);
         ContentValues areaValues = new ContentValues();
         ContentValues descriptionValues = new ContentValues();
         areaValues.put(Schema.AREA,"Head");
@@ -70,6 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_SYMPTOM_AREAS);
         db.execSQL(DROP_TABLE_SYMPTOM_DESCRIPTIONS);
         db.execSQL(DROP_TABLE_SYMPTOMS);
+        db.execSQL(DROP_TABLE_BODY_LOGS);
         this.onCreate(db);
     }
 
@@ -83,6 +91,12 @@ public class DBHelper extends SQLiteOpenHelper {
         static final String TABLE_SYMPTOMS ="symptoms";
         static final String INTENSITY ="intensity";
         static final String ID ="id";
+        static final String TABLE_BODY_LOGS ="body_logs";
+        static final String WEIGHT ="weight";
+        static final String HEART_RATE ="heart_rate";
+        static final String BLOOD_SUGAR ="blood_sugar";
+        static final String UPPER_PRESSURE ="upper_body_pressure";
+        static final String LOWER_PRESSURE ="lower_body_pressure";
     }
 
     public void insertArea(String area){
@@ -95,7 +109,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void insertSymptom(Symptom symptom){
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Schema.ID,symptom.getID());
         contentValues.put(Schema.AREA,symptom.getArea());
         contentValues.put(Schema.DESCRIPTION,symptom.getDescription());
         contentValues.put(Schema.INTENSITY,symptom.getIntensity());
@@ -111,6 +124,18 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase writeableDatabse = this.getWritableDatabase();
         writeableDatabse.insert(Schema.TABLE_SYMPTOMS_DESCRIPTIONS,Schema.DESCRIPTION,contentValues);
         writeableDatabse.close();
+    }
+
+    public void insertBodyLog(BodyLog bodyLog){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Schema.WEIGHT,bodyLog.getWeight());
+        contentValues.put(Schema.HEART_RATE,bodyLog.getHeartRate());
+        contentValues.put(Schema.BLOOD_SUGAR,bodyLog.getBloodSugar());
+        contentValues.put(Schema.UPPER_PRESSURE,bodyLog.getUpperPressure());
+        contentValues.put(Schema.LOWER_PRESSURE,bodyLog.getLowerPressure());
+        SQLiteDatabase writableDatabse = this.getWritableDatabase();
+        writableDatabse.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabse.close();
     }
 
     public ArrayList<String> getAllAreas(){
@@ -160,6 +185,26 @@ public class DBHelper extends SQLiteOpenHelper {
         taskCursor.close();
         writableDatabase.close();
         return symptoms;
+    }
+
+    public ArrayList<BodyLog> getAllBodyLogs(){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        Cursor taskCursor = writableDatabase.rawQuery(SELECT_ALL_BODY_LOGS,null);
+        ArrayList<BodyLog> bodyLogs = new ArrayList<>();
+        if(taskCursor.moveToFirst()){
+            do{
+                int ID = taskCursor.getInt(0);
+                float weight = taskCursor.getFloat(1);
+                int hearRate=taskCursor.getInt(2);
+                float bloodSugar = taskCursor.getFloat(4);
+                int upperPressure = taskCursor.getInt(5);
+                int lowePressure = taskCursor.getInt(5);
+                bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowePressure,ID));
+            }while(taskCursor.moveToNext());
+        }
+        taskCursor.close();
+        writableDatabase.close();
+        return bodyLogs;
     }
 
 }
