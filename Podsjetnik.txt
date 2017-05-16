@@ -7,3 +7,5 @@ Datum za naslov u History.
 Healthy tip of the day na poruci u MainActivity.
 Brisanje iz baze.
 Try-catch blokovi za stvari kao spremanje u bazu i slièno.
+Skala za bol. 
+Refreshanje adaptera umjesto stvaranja novog. 

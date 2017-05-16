@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/paddingForTextViews">
+
+    <TextView
+        android:id="@+id/tvCameraLogDate"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/textViewHeight"
+        android:text="Date: "
+        />
+
+    <ImageView
+        android:id="@+id/ivCameraLogImage"
+        android:layout_width="@dimen/textViewWidth"
+        android:layout_height="@dimen/textViewHeight"
+        android:src="@mipmap/ic_launcher"
+        />
+
+</LinearLayout>

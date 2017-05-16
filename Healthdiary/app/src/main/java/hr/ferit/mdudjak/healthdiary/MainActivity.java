@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_TherapyReminder) {
 
         } else if (id == R.id.nav_CameraLog) {
+            intent = new Intent(this, CameraLogsActivity.class);
+            startActivity(intent);
 
         }
 

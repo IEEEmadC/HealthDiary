@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hr.ferit.mdudjak.healthdiary.CameraLog">
+
+    <TextView
+        android:id="@+id/etAddCameraLog"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/buttonPadding"
+        android:layout_height="@dimen/textViewHeight"
+        android:text="@string/AddCameraLog"
+        android:layout_marginLeft="@dimen/sideMarginForLogTextViews"
+        android:gravity="center"
+        android:background="@color/colorForLogInput"
+        />
+
+    <ImageButton
+        android:id="@+id/bAddCameraLog"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/buttonPadding"
+        android:layout_toRightOf="@id/etAddCameraLog"
+        android:layout_height="@dimen/textViewHeight"
+        android:src="@drawable/ic_button_add"
+        android:background="@color/colorForLogInput"/>
+
+<ListView
+    android:id="@+id/lvCameraLogs"
+    android:layout_marginTop="@dimen/topMarginForLogTextViews"
+    android:layout_below="@+id/bAddCameraLog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></ListView>
+</RelativeLayout>

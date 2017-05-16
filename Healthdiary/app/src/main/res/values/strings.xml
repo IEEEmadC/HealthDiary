@@ -42,4 +42,5 @@
     <string name="BodyLogDialogMessage">Body log is added to history of your body variables logs. Do you want to check it in a log history?</string>
     <string name="AreaLogDialogMessage">Do you want to add selected area to your symptom info?</string>
     <string name="DescriptionLogDialogMessage">Do you want to add selected description to your symptom info?</string>
+    <string name="AddCameraLog">Add camera log</string>
 </resources>

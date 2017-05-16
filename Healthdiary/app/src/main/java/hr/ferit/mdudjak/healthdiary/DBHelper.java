@@ -40,6 +40,11 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String SELECT_ALL_BODY_LOGS = "SELECT " + Schema.ID + "," + Schema.WEIGHT + "," + Schema.HEART_RATE + ","
             + Schema.BLOOD_SUGAR + "," + Schema.UPPER_PRESSURE + "," + Schema.LOWER_PRESSURE + " FROM " + Schema.TABLE_BODY_LOGS;
 
+    static final String CREATE_TABLE_CAMERA_LOGS = "CREATE TABLE " + Schema.TABLE_CAMERA_LOGS +
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.PICTURE_PATH + " TEXT," + Schema.PICTURE_DATE + " TEXT);";
+    static final String DROP_TABLE_CAMERA_LOGS = "DROP TABLE IF EXISTS " + Schema.TABLE_CAMERA_LOGS;
+    static final String SELECT_ALL_CAMERA_LOGS = "SELECT " + Schema.ID + "," + Schema.PICTURE_PATH + "," + Schema.PICTURE_DATE  + " FROM " + Schema.TABLE_CAMERA_LOGS;
+
     private DBHelper (Context context){
         super(context.getApplicationContext(),Schema.DATABASE_NAME,null,Schema.SCHEMA_VERSION);
     }
@@ -56,6 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SYMPTOM_DESCRIPTIONS);
         db.execSQL(CREATE_TABLE_SYMPTOMS);
         db.execSQL(CREATE_TABLE_BODY_LOGS);
+        db.execSQL(CREATE_TABLE_CAMERA_LOGS);
         ContentValues areaValues = new ContentValues();
         ContentValues descriptionValues = new ContentValues();
         areaValues.put(Schema.AREA,"Head");
@@ -78,6 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_SYMPTOM_DESCRIPTIONS);
         db.execSQL(DROP_TABLE_SYMPTOMS);
         db.execSQL(DROP_TABLE_BODY_LOGS);
+        db.execSQL(DROP_TABLE_CAMERA_LOGS);
         this.onCreate(db);
     }
 
@@ -97,14 +104,17 @@ public class DBHelper extends SQLiteOpenHelper {
         static final String BLOOD_SUGAR ="blood_sugar";
         static final String UPPER_PRESSURE ="upper_body_pressure";
         static final String LOWER_PRESSURE ="lower_body_pressure";
+        static final String TABLE_CAMERA_LOGS ="camera_logs";
+        static final String PICTURE_PATH="path";
+        static final String PICTURE_DATE ="date";
     }
 
     public void insertArea(String area){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Schema.AREA,area);
-        SQLiteDatabase writeableDatabse = this.getWritableDatabase();
-        writeableDatabse.insert(Schema.TABLE_SYMPTOMS_AREAS,Schema.AREA,contentValues);
-        writeableDatabse.close();
+        SQLiteDatabase writableDatabse = this.getWritableDatabase();
+        writableDatabse.insert(Schema.TABLE_SYMPTOMS_AREAS,Schema.AREA,contentValues);
+        writableDatabse.close();
     }
 
     public void insertSymptom(Symptom symptom){
@@ -135,6 +145,15 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.LOWER_PRESSURE,bodyLog.getLowerPressure());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         writableDatabase.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.close();
+    }
+
+    public void insertCameraLog(CameraLog cameraLog){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Schema.PICTURE_PATH,cameraLog.getPictureURL());
+        contentValues.put(Schema.PICTURE_DATE,cameraLog.getPictureDate());
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.insert(Schema.TABLE_CAMERA_LOGS,Schema.PICTURE_DATE,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
         writableDatabase.close();
     }
 
@@ -205,6 +224,24 @@ public class DBHelper extends SQLiteOpenHelper {
         taskCursor.close();
         writableDatabase.close();
         return bodyLogs;
+    }
+
+    public ArrayList<CameraLog> getAllCameraLogs(){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        Cursor taskCursor = writableDatabase.rawQuery(SELECT_ALL_CAMERA_LOGS,null);
+        ArrayList<CameraLog> cameraLogs = new ArrayList<>();
+        if(taskCursor.moveToFirst()){
+            do{
+                int ID = taskCursor.getInt(0);
+                String url = taskCursor.getString(1);
+                String date =taskCursor.getString(2);
+
+                cameraLogs.add(new CameraLog(ID,url,date));
+            }while(taskCursor.moveToNext());
+        }
+        taskCursor.close();
+        writableDatabase.close();
+        return cameraLogs;
     }
 
 }
