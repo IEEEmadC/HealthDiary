@@ -28,10 +28,10 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String SELECT_ALL_SYMPTOM_DESCRIPTIONS ="SELECT " + Schema.DESCRIPTION + " FROM " + Schema.TABLE_SYMPTOMS_DESCRIPTIONS;
 
     static final String CREATE_TABLE_SYMPTOMS = "CREATE TABLE " + Schema.TABLE_SYMPTOMS +
-            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.INTENSITY + " INTEGER);";
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.DATE + " TEXT," + Schema.MONTH + " TEXT," + Schema.YEAR + " TEXT," + Schema.INTENSITY + " INTEGER);";
     static final String DROP_TABLE_SYMPTOMS = "DROP TABLE IF EXISTS " + Schema.TABLE_SYMPTOMS;
-    static final String SELECT_ALL_SYMPTOMS = "SELECT " + Schema.ID + "," + Schema.AREA + "," + Schema.DESCRIPTION + ","
-            +
+    static final String SELECT_ALL_SYMPTOMS = "SELECT " + Schema.ID + "," + Schema.AREA + "," + Schema.DESCRIPTION + ","+ Schema.DATE + ","
+            + Schema.MONTH + "," + Schema.YEAR + "," +
             Schema.INTENSITY + " FROM " + Schema.TABLE_SYMPTOMS;
 
     static final String CREATE_TABLE_BODY_LOGS = "CREATE TABLE " + Schema.TABLE_BODY_LOGS +
@@ -107,6 +107,9 @@ public class DBHelper extends SQLiteOpenHelper {
         static final String TABLE_CAMERA_LOGS ="camera_logs";
         static final String PICTURE_PATH="path";
         static final String PICTURE_DATE ="date";
+        static final String DATE ="date" ;
+        static final String YEAR ="year" ;
+        public static final String MONTH ="month" ;
     }
 
     public void insertArea(String area){
@@ -122,15 +125,18 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.AREA,symptom.getArea());
         contentValues.put(Schema.DESCRIPTION,symptom.getDescription());
         contentValues.put(Schema.INTENSITY,symptom.getIntensity());
-        SQLiteDatabase writableDatabse = this.getWritableDatabase();
-        writableDatabse.insert(Schema.TABLE_SYMPTOMS,Schema.AREA,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
-        writableDatabse.close();
+        contentValues.put(Schema.DATE,symptom.getDate());
+        contentValues.put(Schema.MONTH,symptom.getMonth());
+        contentValues.put(Schema.YEAR,symptom.getYear());
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.insert(Schema.TABLE_SYMPTOMS,Schema.AREA,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.close();
     }
 
 
     public void insertDescription(String description){
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Schema.AREA,description);
+        contentValues.put(Schema.DESCRIPTION,description);
         SQLiteDatabase writableDatabse = this.getWritableDatabase();
         writableDatabse.insert(Schema.TABLE_SYMPTOMS_DESCRIPTIONS,Schema.DESCRIPTION,contentValues);
         writableDatabse.close();
@@ -197,8 +203,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 int ID = taskCursor.getInt(0);
                 String area = taskCursor.getString(1);
                 String description = taskCursor.getString(2);
-                int intensity = taskCursor.getInt(3);
-                symptoms.add(new Symptom(area,description,intensity,ID));
+                String date = taskCursor.getString(3);
+                String month = taskCursor.getString(4);
+                String year = taskCursor.getString(5);
+                int intensity = taskCursor.getInt(6);
+                symptoms.add(new Symptom(area,description,intensity,ID,date,month,year));
             }while(taskCursor.moveToNext());
         }
         taskCursor.close();
@@ -217,8 +226,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 int hearRate=taskCursor.getInt(2);
                 float bloodSugar = taskCursor.getFloat(3);
                 int upperPressure = taskCursor.getInt(4);
-                int lowePressure = taskCursor.getInt(5);
-                bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowePressure,ID));
+                int lowerPressure = taskCursor.getInt(5);
+                bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowerPressure,ID));
             }while(taskCursor.moveToNext());
         }
         taskCursor.close();
@@ -235,7 +244,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 int ID = taskCursor.getInt(0);
                 String url = taskCursor.getString(1);
                 String date =taskCursor.getString(2);
-
                 cameraLogs.add(new CameraLog(ID,url,date));
             }while(taskCursor.moveToNext());
         }
@@ -244,4 +252,39 @@ public class DBHelper extends SQLiteOpenHelper {
         return cameraLogs;
     }
 
+    public void deleteSymptom(Symptom symptom) {
+        int id = symptom.getID();
+        String[] arg = new String[]{String.valueOf(id)};
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_SYMPTOMS, Schema.ID + "=?",arg);
+        db.close();
+    }
+
+    public void deleteBodyLog(BodyLog bodyLog) {
+        int id = bodyLog.getID();
+        String[] arg = new String[]{String.valueOf(id)};
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_BODY_LOGS, Schema.ID + "=?",arg);
+        db.close();
+    }
+
+    public void deleteCameraLog(CameraLog cameraLog) {
+        int id = cameraLog.getID();
+        String[] arg = new String[]{String.valueOf(id)};
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_CAMERA_LOGS, Schema.ID + "=?",arg);
+        db.close();
+    }
+
+    public void deleteArea(String area) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_SYMPTOMS_AREAS, Schema.AREA + "=?", new String[]{area});
+        db.close();
+    }
+
+    public void deleteDescription(String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_SYMPTOMS_DESCRIPTIONS, Schema.DESCRIPTION + "=?", new String[]{description});
+        db.close();
+    }
 }

@@ -30,8 +30,8 @@
     <string name="AddBodyPressureTitle">Body pressure (mm/Hg)</string>
     <string name="AddBodyPressureHint">Add body pressure</string>
     <string name="bAddBodyLogText">Submit</string>
-    <string name="AddUpperBodyPressureHint">Add upper body pressure</string>
-    <string name="AddLowerBodyPressureHint">Add lower body pressure</string>
+    <string name="AddUpperBodyPressureHint">Add upper pressure</string>
+    <string name="AddLowerBodyPressureHint">Add lower pressure</string>
     <string name="WeightHistoryTitle">Weight:</string>
     <string name="HeartRateHistoryTitle">Heart rate:</string>
     <string name="BloodSugarHistoryTitle">Blood sugar:</string>
@@ -43,4 +43,11 @@
     <string name="AreaLogDialogMessage">Do you want to add selected area to your symptom info?</string>
     <string name="DescriptionLogDialogMessage">Do you want to add selected description to your symptom info?</string>
     <string name="AddCameraLog">Add camera log</string>
+    <string name="noConnectivityWarning">No Internet Connection Available.\n\nPlease connect to working internet connection.</string>
+    <string name="connectionTimeoutMessage">[Connection timed out]\nWe are sorry, but your status feed could not be retrieved.</string>
+    <string name="connectionTimeoutMessageForTips">We are sorry, but your daily tips could not be retrieved.</string>
+    <string name="welcomeTitle">Welcome!\n</string>
+    <string name="welcomeLayoutText">Symptom logs today</string>
+    <string name="title_activity_health_institutions">Map</string>
+    <string name="LocationRequestDenied">Your location can not be retrieved.</string>
 </resources>

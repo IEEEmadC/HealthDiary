@@ -38,6 +38,11 @@ public class SymptomsAdapter extends BaseAdapter {
         symptomViewHolder.tvArea.setText(symptom.getArea());
         symptomViewHolder.tvDescription.setText(symptom.getDescription());
         symptomViewHolder.tvIntensity.setText(String.valueOf(symptom.getIntensity()));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(symptom.getDate()).append(".");
+        stringBuilder.append(symptom.getMonth()).append(".");
+        stringBuilder.append(symptom.getYear()).append(".");
+        symptomViewHolder.tvDate.setText(String.valueOf(stringBuilder));
         return convertView;
     }
     public void insert(Symptom symptom) {
@@ -45,11 +50,12 @@ public class SymptomsAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
     public static class ViewHolder {
-        public TextView tvArea, tvDescription, tvIntensity;
-        public ViewHolder(View bookView) {
-            tvArea = (TextView) bookView.findViewById(R.id.tvSymptomArea);
-            tvDescription = (TextView) bookView.findViewById(R.id.tvSymptomDescription);
-            tvIntensity = (TextView) bookView.findViewById(R.id.tvSymptomIntensity);
+        public TextView tvArea, tvDescription, tvIntensity,tvDate;
+        public ViewHolder(View symptomView) {
+            tvDate= (TextView) symptomView.findViewById(R.id.tvSymptomDate);
+            tvArea = (TextView) symptomView.findViewById(R.id.tvSymptomArea);
+            tvDescription = (TextView) symptomView.findViewById(R.id.tvSymptomDescription);
+            tvIntensity = (TextView) symptomView.findViewById(R.id.tvSymptomIntensity);
         }
     }
 }

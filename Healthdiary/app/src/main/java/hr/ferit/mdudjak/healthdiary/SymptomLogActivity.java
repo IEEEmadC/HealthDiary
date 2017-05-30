@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SymptomLogActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -74,7 +75,12 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                         etPainIntensity.setError("Please enter a number from 1 to 10.");
                     } else {
                         if ((area != null) && (description != null)) {
-                            final Symptom newSymptom = new Symptom(area, description, iPainIntensity);
+                            StringBuilder stringBuilder = new StringBuilder();
+                            Calendar calendar =Calendar.getInstance();
+                            String day= String.valueOf(calendar.get(Calendar.DATE));
+                            String month =String.valueOf(calendar.get(Calendar.MONTH));
+                            String year =String.valueOf(calendar.get(Calendar.YEAR));
+                            final Symptom newSymptom = new Symptom(area, description, iPainIntensity,day,month,year);
                             AlertDialog.Builder dialogBuilderForSaving = new AlertDialog.Builder(this);
                             final AlertDialog.Builder dialogBuilderAfterSaving = new AlertDialog.Builder(this);
                             final Intent historyIntent = new Intent(this, SymptomsHistory.class);
@@ -85,10 +91,8 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             DBHelper.getInstance(getApplicationContext()).insertSymptom(newSymptom);
-
                                             dialogBuilderAfterSaving.setMessage(R.string.SymptomLogDialogMessage);
                                             dialogBuilderAfterSaving.setCancelable(true);
-
                                             dialogBuilderAfterSaving.setPositiveButton(
                                                     "Yes",
                                                     new DialogInterface.OnClickListener() {

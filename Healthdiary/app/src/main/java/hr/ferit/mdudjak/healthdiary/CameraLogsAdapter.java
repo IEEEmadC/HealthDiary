@@ -56,6 +56,7 @@ public class CameraLogsAdapter extends BaseAdapter{
                 .load(cameraLogs.getPictureURL())
                 .fit()
                 .centerCrop()
+              //  .rotate(90f)
                 .into(cameraLogsViewHolder.ivImage);
         return convertView;
     }

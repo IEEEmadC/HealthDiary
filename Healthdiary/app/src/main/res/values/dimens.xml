@@ -9,10 +9,22 @@
     <dimen name="sideMarginForLogTextViews">80dp</dimen>
     <dimen name="paddingForTextViews">10dp</dimen>
     <dimen name="textViewHeight">40dp</dimen>
-    <dimen name="halfOfTextViewWidth">100dp</dimen>
+    <dimen name="halfOfTextViewWidth">115dp</dimen>
+    <dimen name="lessThanHalfOfTextViewWidth">85dp</dimen>
     <dimen name="textViewWidth">300dp</dimen>
     <dimen name="buttonPadding">5dp</dimen>
     <dimen name="marginForSearchArea">5dp</dimen>
     <dimen name="buttonSubmitMargin">18dp</dimen>
-
+    <dimen name="pictureWidth">500dp</dimen>
+    <dimen name="pictureHeight">200dp</dimen>
+    <dimen name="titleSize">20sp</dimen>
+    <dimen name="padding">5dp</dimen>
+    <dimen name="width">100dp</dimen>
+    <dimen name="snackbarHeight">200dp</dimen>
+    <dimen name="bodyPressureTextSize">8sp</dimen>
+    <dimen name="marginForItemNews">20dp</dimen>
+    <dimen name="topMarginForCameraButton">10dp</dimen>
+    <dimen name="sideMarginForCameraLog">120dp</dimen>
+    <dimen name="numberSize">50sp</dimen>
+    <dimen name="marginForWelcomeScreen">1dp</dimen>
 </resources>

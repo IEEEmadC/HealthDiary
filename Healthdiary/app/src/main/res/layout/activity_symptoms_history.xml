@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorForLogInput"
     tools:context="hr.ferit.mdudjak.healthdiary.SymptomsHistory">
 <ListView
     android:id="@+id/lvSymptomsHistory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/padding"
     ></ListView>
 </LinearLayout>

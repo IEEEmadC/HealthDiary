@@ -6,4 +6,5 @@
     <color name="colorForLogTitle">#F2F2F2</color>
     <color name="colorForLogInput">#D8D8D8</color>
     <color name="white">#FFFFFF</color>
+    <color name="redColorforNumber">#FF0000</color>
 </resources>

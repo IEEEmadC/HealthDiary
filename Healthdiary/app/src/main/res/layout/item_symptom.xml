@@ -2,11 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/marginForItemNews"
+    android:background="@color/white"
     android:padding="@dimen/paddingForTextViews">
+    <TextView
+        android:id="@+id/tvSymptomDate"
+        android:layout_width="match_parent"
+        android:text="Symptom's date"
+        android:textAlignment="center"
+        android:padding="@dimen/padding"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/llAreaHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSymptomDate"
         android:orientation="horizontal"
         android:weightSum="2">
         <TextView
