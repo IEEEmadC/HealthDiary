@@ -49,6 +49,10 @@ public class SymptomsAdapter extends BaseAdapter {
         this.mSymptoms.add(symptom);
         this.notifyDataSetChanged();
     }
+    public void deleteAt(int position) {
+        this.mSymptoms.remove(position);
+        this.notifyDataSetChanged();
+    }
     public static class ViewHolder {
         public TextView tvArea, tvDescription, tvIntensity,tvDate;
         public ViewHolder(View symptomView) {

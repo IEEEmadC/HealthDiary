@@ -17,7 +17,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class AddSymptomInfo extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class AddSymptomInfo extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
     ListView listView;
     ImageButton bAddInfo;
     ImageButton ibSearchInfo;
@@ -25,6 +25,8 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
     EditText etSearchInfo;
     ArrayList<String> areas;
     ArrayList<String> descriptions;
+    ArrayAdapter<String> areaItemsAdapter;
+    ArrayAdapter<String> descriptionsItemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +47,10 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
         this.etSearchInfo= (EditText) this.findViewById(R.id.etSearchArea);
         areas =new ArrayList<String>();
         this.areas = DBHelper.getInstance(this).getAllAreas();
-        ArrayAdapter<String> areaItemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,areas);
+        areaItemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,areas);
         this.listView.setAdapter(areaItemsAdapter);
         this.listView.setOnItemClickListener(this);
+        this.listView.setOnItemLongClickListener(this);
         this.bAddInfo= (ImageButton) this.findViewById(R.id.ibAddArea);
         this.bAddInfo.setOnClickListener(this);
         this.ibSearchInfo = (ImageButton) this.findViewById(R.id.ibSearchArea);
@@ -59,9 +62,10 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
         this.etSearchInfo= (EditText) this.findViewById(R.id.etSearchDescription);
         descriptions = new ArrayList<String>();
         this.descriptions = DBHelper.getInstance(this).getAllDescriptions();
-        ArrayAdapter<String> descriptionsItemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,descriptions);
+        descriptionsItemsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,descriptions);
         this.listView.setAdapter(descriptionsItemsAdapter);
         this.listView.setOnItemClickListener(this);
+        this.listView.setOnItemLongClickListener(this);
         this.bAddInfo= (ImageButton) this.findViewById(R.id.ibAddDescription);
         this.bAddInfo.setOnClickListener(this);
         this.ibSearchInfo = (ImageButton) this.findViewById(R.id.ibSearchDescription);
@@ -79,7 +83,7 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
                 String area = etAddInfo.getText().toString();
                 areas.add(area);
                 DBHelper.getInstance(getApplicationContext()).insertArea(area);
-                ArrayAdapter<String> areaItemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, areas);
+                areaItemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, areas);
                 this.listView.setAdapter(areaItemsAdapter);
                 //Maknuti tipkovnicu
                 break;
@@ -88,7 +92,7 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
                 String description = etAddInfo.getText().toString();
                 descriptions.add(description);
                 DBHelper.getInstance(getApplicationContext()).insertDescription(description);
-                ArrayAdapter<String> descriptionsItemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, descriptions);
+                descriptionsItemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, descriptions);
                 this.listView.setAdapter(descriptionsItemsAdapter);
                 //Maknuti tipkovnicu
                 break;
@@ -178,4 +182,64 @@ public class AddSymptomInfo extends AppCompatActivity implements View.OnClickLis
         alertDialog.show();
     }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        switch(parent.getId()){
+            case(R.id.areaList):
+                android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(AddSymptomInfo.this);
+                dialogBuilder.setMessage("Do you want to delete selected area?");
+                dialogBuilder.setCancelable(true);
+
+                dialogBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                DBHelper.getInstance(getApplicationContext()).deleteArea((String) areaItemsAdapter.getItem(position));
+                                areaItemsAdapter.remove(areaItemsAdapter.getItem(position));
+                                areaItemsAdapter.notifyDataSetChanged();
+                                dialog.cancel();
+                            }
+                        });
+
+                dialogBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                android.support.v7.app.AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                break;
+
+            case(R.id.descriptionList):
+                android.support.v7.app.AlertDialog.Builder dialogBuilder2 = new android.support.v7.app.AlertDialog.Builder(AddSymptomInfo.this);
+                dialogBuilder2.setMessage("Do you want to delete selected description?");
+                dialogBuilder2.setCancelable(true);
+                dialogBuilder2.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                DBHelper.getInstance(getApplicationContext()).deleteDescription((String) descriptionsItemsAdapter.getItem(position));
+                                descriptionsItemsAdapter.remove(descriptionsItemsAdapter.getItem(position));
+                                descriptionsItemsAdapter.notifyDataSetChanged();
+                                dialog.cancel();
+                            }
+                        });
+
+                dialogBuilder2.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                android.support.v7.app.AlertDialog alertDialog2 = dialogBuilder2.create();
+                alertDialog2.show();
+                break;
+        }
+        return true;
+    }
 }

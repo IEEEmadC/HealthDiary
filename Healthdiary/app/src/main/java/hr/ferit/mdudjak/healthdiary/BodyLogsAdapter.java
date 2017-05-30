@@ -46,6 +46,10 @@ public class BodyLogsAdapter extends BaseAdapter {
         this.mBodyLogs.add(bodyLog);
         this.notifyDataSetChanged();
     }
+    public void deleteAt(int position) {
+        this.mBodyLogs.remove(position);
+        this.notifyDataSetChanged();
+    }
     public static class ViewHolder {
         public TextView tvWeight, tvHeartRate, tvBloodSugar, tvBodyPressure;
         public ViewHolder(View view) {

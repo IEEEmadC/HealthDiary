@@ -1,6 +1,7 @@
 package hr.ferit.mdudjak.healthdiary;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
     String mDate,mURL,mImageName;
     File mFile;
     private String mFileName;
+    CameraLogsAdapter mCameraLogsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +53,41 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
         this.ibAddCameraLog.setOnClickListener(this);
         this.lvCameraLogs = (ListView) this.findViewById(R.id.lvCameraLogs);
         ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
-        CameraLogsAdapter mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
+        mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
         this.lvCameraLogs.setAdapter(mCameraLogsAdapter);
         this.lvCameraLogs.setOnItemClickListener(this);
+        this.lvCameraLogs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(CameraLogsActivity.this);
+                dialogBuilder.setMessage("Do you want to delete camera log?");
+                dialogBuilder.setCancelable(true);
+
+                dialogBuilder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                DBHelper.getInstance(getApplicationContext()).deleteCameraLog((CameraLog) mCameraLogsAdapter.getItem(position));
+                                mCameraLogsAdapter.deleteAt(position);
+                                dialog.cancel();
+                            }
+                        });
+
+                dialogBuilder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                return true;
+            }
+        });
     }
 
     private void dispatchTakePictureIntent() {
@@ -152,7 +187,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
                     mCameraLog = new CameraLog(mURL, mDate);
                     DBHelper.getInstance(getApplicationContext()).insertCameraLog(mCameraLog);
                     ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
-                    CameraLogsAdapter mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
+                    mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
                     this.lvCameraLogs.setAdapter(mCameraLogsAdapter);
                     this.galleryAddPic(mFileName);
                 } else {
@@ -166,8 +201,9 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
 
         StringBuilder stringBuilder = new StringBuilder();
         Calendar calendar =Calendar.getInstance();
+
         String sAmPm = Boolean.valueOf(String.valueOf(calendar.get(Calendar.AM_PM)))?"AM":"PM";
-        stringBuilder.append(calendar.get(Calendar.HOUR)).append(":").append(calendar.get(Calendar.MINUTE)+ " ").append(sAmPm).append("\n");
+        stringBuilder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE)+ " ").append(sAmPm).append("\n");
         stringBuilder.append(calendar.get(Calendar.DATE)+".").append(calendar.get(Calendar.MONTH)+".").append(calendar.get(Calendar.YEAR)+".").append("\n");
         mDate= String.valueOf(stringBuilder);
 
@@ -199,6 +235,6 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        //Otvaranje slike u galeriji
     }
 }

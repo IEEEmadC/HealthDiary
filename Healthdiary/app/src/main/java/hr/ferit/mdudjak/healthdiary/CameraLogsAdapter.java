@@ -60,6 +60,10 @@ public class CameraLogsAdapter extends BaseAdapter{
                 .into(cameraLogsViewHolder.ivImage);
         return convertView;
     }
+    public void deleteAt(int position) {
+        this.mCameraLogs.remove(position);
+        this.notifyDataSetChanged();
+    }
 
     static class CameraLogsViewHolder {
         TextView tvDate;
