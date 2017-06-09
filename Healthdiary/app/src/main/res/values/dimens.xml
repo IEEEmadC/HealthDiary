@@ -27,4 +27,8 @@
     <dimen name="sideMarginForCameraLog">120dp</dimen>
     <dimen name="numberSize">50sp</dimen>
     <dimen name="marginForWelcomeScreen">1dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="marginForSwitch">25dp</dimen>
+    <dimen name="marginForCameraBodyLogButton">20dp</dimen>
 </resources>

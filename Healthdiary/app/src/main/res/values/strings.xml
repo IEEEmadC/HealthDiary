@@ -50,4 +50,25 @@
     <string name="welcomeLayoutText">Symptom logs today</string>
     <string name="title_activity_health_institutions">Map</string>
     <string name="LocationRequestDenied">Your location can not be retrieved.</string>
+    <string name="title_activity_therapy_reminder">TherapyReminder</string>
+    <string name="menu_insert">Add reminder</string>
+    <string name="no_reminders">No reminders</string>
+    <string name="titleOfReminder">Title of task</string>
+    <string name="body">Description of task</string>
+    <string name="dateofReminder">Date</string>
+    <string name="timeOfReminder">Time</string>
+    <string name="confirmReminder">Confirm</string>
+    <string name="task_saved_message">Reminder is saved.</string>
+    <string name="notify_new_task_message">You have a task that needs to be reviewed.</string>
+    <string name="insertDate">Choose date</string>
+    <string name="insertTime">Choose time</string>
+    <string name="setRepeatingText">Repeat every:</string>
+    <string name="repeatingTitle">Repeating every:</string>
+    <string name="bAddBodyCameraLogText">Camera Log</string>
+    <string name="CameraLogDoneMessage">Your image is saved.</string>
+    <string-array name="repeating_array">
+        <item>Minutes</item>
+        <item>Hours</item>
+        <item>Days</item>
+    </string-array>
 </resources>

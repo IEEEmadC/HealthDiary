@@ -130,7 +130,7 @@ public class HandleXML {
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     conn.setReadTimeout(3000 /* milliseconds */);
-                    conn.setConnectTimeout(6000 /* milliseconds */);
+                    conn.setConnectTimeout(4000 /* milliseconds */);
                     conn.setRequestMethod("GET");
                     conn.setDoInput(true);
 

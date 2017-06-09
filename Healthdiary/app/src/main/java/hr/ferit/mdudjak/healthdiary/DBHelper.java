@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mario on 10.5.2017..
@@ -35,16 +36,21 @@ public class DBHelper extends SQLiteOpenHelper {
             Schema.INTENSITY + " FROM " + Schema.TABLE_SYMPTOMS;
 
     static final String CREATE_TABLE_BODY_LOGS = "CREATE TABLE " + Schema.TABLE_BODY_LOGS +
-            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.WEIGHT + " REAL," + Schema.HEART_RATE + " INTEGER," + Schema.BLOOD_SUGAR + " REAL,"+ Schema.UPPER_PRESSURE + " INTEGER,"+ Schema.LOWER_PRESSURE + " INTEGER);";
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.WEIGHT + " REAL," + Schema.HEART_RATE + " INTEGER," + Schema.BLOOD_SUGAR + " REAL,"+ Schema.UPPER_PRESSURE + " INTEGER,"+ Schema.LOWER_PRESSURE + " INTEGER,"+ Schema.PICTURE_DATE + " TEXT);";
     static final String DROP_TABLE_BODY_LOGS = "DROP TABLE IF EXISTS " + Schema.TABLE_BODY_LOGS;
     static final String SELECT_ALL_BODY_LOGS = "SELECT " + Schema.ID + "," + Schema.WEIGHT + "," + Schema.HEART_RATE + ","
-            + Schema.BLOOD_SUGAR + "," + Schema.UPPER_PRESSURE + "," + Schema.LOWER_PRESSURE + " FROM " + Schema.TABLE_BODY_LOGS;
+            + Schema.BLOOD_SUGAR + "," + Schema.UPPER_PRESSURE + "," + Schema.LOWER_PRESSURE + "," + Schema.PICTURE_DATE+ " FROM " + Schema.TABLE_BODY_LOGS;
 
     static final String CREATE_TABLE_CAMERA_LOGS = "CREATE TABLE " + Schema.TABLE_CAMERA_LOGS +
             " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.PICTURE_PATH + " TEXT," + Schema.PICTURE_DATE + " TEXT);";
     static final String DROP_TABLE_CAMERA_LOGS = "DROP TABLE IF EXISTS " + Schema.TABLE_CAMERA_LOGS;
     static final String SELECT_ALL_CAMERA_LOGS = "SELECT " + Schema.ID + "," + Schema.PICTURE_PATH + "," + Schema.PICTURE_DATE  + " FROM " + Schema.TABLE_CAMERA_LOGS;
 
+
+    static final String CREATE_TABLE_REMINDERS = "CREATE TABLE " + Schema.TABLE_REMINDERS +
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.TITLE + " TEXT," + Schema.DESCRIPTION + " TEXT," +Schema.REPEATING + " INTEGER,"+ Schema.DATETIME  + " TEXT);";
+    static final String DROP_TABLE_REMINDERS = "DROP TABLE IF EXISTS " + Schema.TABLE_REMINDERS;
+    static final String SELECT_ALL_REMINDERS = "SELECT " + Schema.ID + "," + Schema.TITLE + ","+ Schema.DESCRIPTION + "," + Schema.DATETIME + "," + Schema.REPEATING + " FROM " + Schema.TABLE_REMINDERS;
     private DBHelper (Context context){
         super(context.getApplicationContext(),Schema.DATABASE_NAME,null,Schema.SCHEMA_VERSION);
     }
@@ -62,6 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SYMPTOMS);
         db.execSQL(CREATE_TABLE_BODY_LOGS);
         db.execSQL(CREATE_TABLE_CAMERA_LOGS);
+        db.execSQL(CREATE_TABLE_REMINDERS);
         ContentValues areaValues = new ContentValues();
         ContentValues descriptionValues = new ContentValues();
         areaValues.put(Schema.AREA,"Head");
@@ -85,6 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE_SYMPTOMS);
         db.execSQL(DROP_TABLE_BODY_LOGS);
         db.execSQL(DROP_TABLE_CAMERA_LOGS);
+        db.execSQL(DROP_TABLE_REMINDERS);
         this.onCreate(db);
     }
 
@@ -109,7 +117,11 @@ public class DBHelper extends SQLiteOpenHelper {
         static final String PICTURE_DATE ="date";
         static final String DATE ="date" ;
         static final String YEAR ="year" ;
-        public static final String MONTH ="month" ;
+        static final String MONTH ="month" ;
+        static final String TABLE_REMINDERS ="reminders" ;
+        static final String TITLE="title";
+        static final String DATETIME="datetime";
+        static final String REPEATING ="repeating";
     }
 
     public void insertArea(String area){
@@ -133,7 +145,6 @@ public class DBHelper extends SQLiteOpenHelper {
         writableDatabase.close();
     }
 
-
     public void insertDescription(String description){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Schema.DESCRIPTION,description);
@@ -149,6 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.BLOOD_SUGAR,bodyLog.getBloodSugar());
         contentValues.put(Schema.UPPER_PRESSURE,bodyLog.getUpperPressure());
         contentValues.put(Schema.LOWER_PRESSURE,bodyLog.getLowerPressure());
+        contentValues.put(Schema.PICTURE_DATE,bodyLog.getDate());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         writableDatabase.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
         writableDatabase.close();
@@ -160,6 +172,17 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.PICTURE_DATE,cameraLog.getPictureDate());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         writableDatabase.insert(Schema.TABLE_CAMERA_LOGS,Schema.PICTURE_DATE,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.close();
+    }
+
+    public void insertReminder(Reminder reminder){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Schema.TITLE,reminder.getTitle());
+        contentValues.put(Schema.DESCRIPTION,reminder.getDescription());
+        contentValues.put(Schema.REPEATING,reminder.getRepeatingTime());
+        contentValues.put(Schema.DATETIME,reminder.getDateTime());
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.insert(Schema.TABLE_REMINDERS,Schema.DATETIME,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
         writableDatabase.close();
     }
 
@@ -227,7 +250,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 float bloodSugar = taskCursor.getFloat(3);
                 int upperPressure = taskCursor.getInt(4);
                 int lowerPressure = taskCursor.getInt(5);
-                bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowerPressure,ID));
+                String date = taskCursor.getString(6);
+                bodyLogs.add(new BodyLog(weight,hearRate,bloodSugar,upperPressure,lowerPressure,date,ID));
             }while(taskCursor.moveToNext());
         }
         taskCursor.close();
@@ -251,6 +275,26 @@ public class DBHelper extends SQLiteOpenHelper {
         writableDatabase.close();
         return cameraLogs;
     }
+
+    public ArrayList<Reminder> getAllReminders(){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        Cursor taskCursor = writableDatabase.rawQuery(SELECT_ALL_REMINDERS,null);
+        ArrayList<Reminder> reminders = new ArrayList<>();
+        if(taskCursor.moveToFirst()){
+            do{
+                int ID = taskCursor.getInt(0);
+                String title = taskCursor.getString(1);
+                String description = taskCursor.getString(2);
+                String datetime = taskCursor.getString(3);
+                int repeating = taskCursor.getInt(4);
+                reminders.add(new Reminder(title,description,datetime,repeating,ID));
+            }while(taskCursor.moveToNext());
+        }
+        taskCursor.close();
+        writableDatabase.close();
+        return reminders;
+    }
+
 
     public void deleteSymptom(Symptom symptom) {
         int id = symptom.getID();
@@ -287,4 +331,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(Schema.TABLE_SYMPTOMS_DESCRIPTIONS, Schema.DESCRIPTION + "=?", new String[]{description});
         db.close();
     }
+
+    public void deleteReminder(Reminder reminder) {
+        int id = reminder.getID();
+        String[] arg = new String[]{String.valueOf(id)};
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_REMINDERS, Schema.ID + "=?",arg);
+        db.close();
+    }
+
+
 }
