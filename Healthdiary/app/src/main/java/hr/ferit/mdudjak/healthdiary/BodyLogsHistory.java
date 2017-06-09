@@ -1,10 +1,13 @@
 package hr.ferit.mdudjak.healthdiary;
 
 import android.content.DialogInterface;
+<<<<<<< HEAD
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+=======
+>>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,9 +32,14 @@ public class BodyLogsHistory extends AppCompatActivity implements AdapterView.On
     private void setUpUI() {
         this.lvBodyLogsList = (ListView) this.findViewById(R.id.lvBodyLogsHistory);
         ArrayList<BodyLog> bodyLogs = DBHelper.getInstance(this).getAllBodyLogs();
+<<<<<<< HEAD
         this.mBodyLogsAdapter = new BodyLogsAdapter(bodyLogs,getApplicationContext());
         this.lvBodyLogsList.setAdapter(mBodyLogsAdapter);
         this.lvBodyLogsList.setOnItemClickListener(this);
+=======
+        final BodyLogsAdapter mBodyLogsAdapter = new BodyLogsAdapter(bodyLogs);
+        this.lvBodyLogsList.setAdapter(mBodyLogsAdapter);
+>>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
         this.lvBodyLogsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
 
             @Override
@@ -65,6 +73,7 @@ public class BodyLogsHistory extends AppCompatActivity implements AdapterView.On
                 return true;
             }
         });
+<<<<<<< HEAD
     }
 
     @Override
@@ -89,5 +98,7 @@ public class BodyLogsHistory extends AppCompatActivity implements AdapterView.On
             getApplicationContext().grantUriPermission(packageName, Uri.parse(pictureURL), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivity(intent);
+=======
+>>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
     }
 }

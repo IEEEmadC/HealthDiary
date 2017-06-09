@@ -42,7 +42,10 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
     File mFile;
     private String mFileName;
     CameraLogsAdapter mCameraLogsAdapter;
+<<<<<<< HEAD
     Uri photoURI;
+=======
+>>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +262,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+<<<<<<< HEAD
         CameraLog cameraLog = (CameraLog) mCameraLogsAdapter.getItem(position);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(cameraLog.getPictureURL()));
         List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
@@ -269,5 +273,8 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
             getApplicationContext().grantUriPermission(packageName, Uri.parse(cameraLog.getPictureURL()), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivity(intent);
+=======
+        //Otvaranje slike u galeriji
+>>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
     }
 }
