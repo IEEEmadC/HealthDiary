@@ -38,11 +38,7 @@ public class SymptomsAdapter extends BaseAdapter {
         symptomViewHolder.tvArea.setText(symptom.getArea());
         symptomViewHolder.tvDescription.setText(symptom.getDescription());
         symptomViewHolder.tvIntensity.setText(String.valueOf(symptom.getIntensity()));
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(symptom.getDate()).append(".");
-        stringBuilder.append(symptom.getMonth()).append(".");
-        stringBuilder.append(symptom.getYear()).append(".");
-        symptomViewHolder.tvDate.setText(String.valueOf(stringBuilder));
+        symptomViewHolder.tvDate.setText(symptom.getDate());
         return convertView;
     }
     public void insert(Symptom symptom) {

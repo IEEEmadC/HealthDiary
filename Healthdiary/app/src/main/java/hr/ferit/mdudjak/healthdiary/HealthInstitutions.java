@@ -10,12 +10,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationListener;
-<<<<<<< HEAD
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import android.os.Build;
-=======
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -28,7 +25,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-<<<<<<< HEAD
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -43,15 +39,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
-=======
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import android.support.v4.app.FragmentActivity;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import com.google.android.gms.location.places.Place;
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -64,23 +51,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-<<<<<<< HEAD
 public class HealthInstitutions extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
-=======
-public class HealthInstitutions extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.OnConnectionFailedListener {
-
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private GoogleMap mMap;
-    private GoogleMap.OnMapClickListener mCustomOnMapClickListener;
-    LocationListener mLocationListener;
-    LocationManager mLocationManager;
-    private GoogleApiClient mGoogleApiClient;
-    int PLACE_PICKER_REQUEST = 1;
-
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 
     private GoogleMap mMap;
     double latitude;
@@ -96,7 +70,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_institutions);
         this.setUpUI();
-<<<<<<< HEAD
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -108,48 +81,16 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         }
         else {
             Log.d("onCreate","Google Play Services available.");
-=======
-        this.mLocationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        this.mLocationListener = new SimpleLocationListener();
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
-
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-        try {
-            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
         }
     }
 
     private void setUpUI() {
-<<<<<<< HEAD
         this.btnPharmacy = (Button) this.findViewById(R.id.btnPharmacy);
         this.btnHospital = (Button) this.findViewById(R.id.btnHospital);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-=======
-        /*
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this); */
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-            }
-        }
+        mapFragment.getMapAsync(this);
     }
 
     private boolean CheckGooglePlayServices() {
@@ -373,21 +314,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         }
     }
 
-<<<<<<< HEAD
-=======
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    private class SimpleLocationListener implements LocationListener{
-        @Override
-        public void onLocationChanged(Location location) { updateLocationDisplay(location); }
-        @Override public void onStatusChanged(String provider, int status, Bundle extras) {}
-        @Override public void onProviderEnabled(String provider) { }
-        @Override public void onProviderDisabled(String provider) {}
-    }
->>>>>>> ef4231a657d01c5ef3f29b53c2f82d7be4d24149
 }
 
 

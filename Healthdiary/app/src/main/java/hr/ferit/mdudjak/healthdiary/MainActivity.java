@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -124,11 +125,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.txInfoData.setText(String.valueOf(stringBuilder));
         List<Symptom> symptoms = DBHelper.getInstance(this).getAllSymptoms();
         int i=0,br=0;
+        StringBuilder stringBuilder1 = new StringBuilder();
+        stringBuilder1.append(calendar.get(Calendar.DATE) + ".").append(calendar.get(Calendar.MONTH) + ".").append(calendar.get(Calendar.YEAR) + ".");
+        String dateNow = String.valueOf(stringBuilder1);
         for(i=0;i<symptoms.size();i++){
-            Symptom symptom =symptoms.get(i);
-            if(symptom.getDate().equals(day)&&symptom.getMonth().equals(month)&&symptom.getYear().equals(year)){
+            String date = symptoms.get(i).getDate();
+            Log.e("date",symptoms.get(i).getDate());
+            String lines[] = date.split("\\r?\\n");
+            Log.e("Druga linija",lines[1]);
+            if(lines[1].equals(dateNow)){
                 br++;
             }
+            Log.e("Razlika", String.valueOf(dateNow.compareTo(lines[1])));
         }
         this.txNumberOfSymptomLogs.setText(String.valueOf(br));
     }
@@ -196,27 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -231,7 +218,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent = new Intent(this, BodyLogActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_statistics) {
-
+            intent = new Intent(this,BodyStatistics.class);
+            startActivity(intent);
         } else if (id == R.id.nav_symptomHistory) {
             intent = new Intent(this, SymptomsHistory.class);
             startActivity(intent);

@@ -76,11 +76,12 @@ public class SymptomLogActivity extends AppCompatActivity implements View.OnClic
                     } else {
                         if ((area != null) && (description != null)) {
                             StringBuilder stringBuilder = new StringBuilder();
-                            Calendar calendar =Calendar.getInstance();
-                            String day= String.valueOf(calendar.get(Calendar.DATE));
-                            String month =String.valueOf(calendar.get(Calendar.MONTH));
-                            String year =String.valueOf(calendar.get(Calendar.YEAR));
-                            final Symptom newSymptom = new Symptom(area, description, iPainIntensity,day,month,year);
+                            Calendar calendar = Calendar.getInstance();
+                            String sAmPm = Boolean.valueOf(String.valueOf(calendar.get(Calendar.AM_PM))) ? "AM" : "PM";
+                            stringBuilder.append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE) + " ").append(sAmPm).append("\n");
+                            stringBuilder.append(calendar.get(Calendar.DATE) + ".").append(calendar.get(Calendar.MONTH) + ".").append(calendar.get(Calendar.YEAR) + ".").append("\n");
+                            String date = String.valueOf(stringBuilder);
+                            final Symptom newSymptom = new Symptom(area, description, iPainIntensity,date);
                             AlertDialog.Builder dialogBuilderForSaving = new AlertDialog.Builder(this);
                             final AlertDialog.Builder dialogBuilderAfterSaving = new AlertDialog.Builder(this);
                             final Intent historyIntent = new Intent(this, SymptomsHistory.class);

@@ -66,6 +66,12 @@
     <string name="repeatingTitle">Repeating every:</string>
     <string name="bAddBodyCameraLogText">Camera Log</string>
     <string name="CameraLogDoneMessage">Your image is saved.</string>
+    <string name="buttonSymptomStatisticsText">SYMPTOMS</string>
+    <string name="buttonBodyStatisticsText">BODY</string>
+    <string name="UserActivityBarChartTitle">Your activity of logging symptoms</string>
+    <string name="buttonDescriptionPerAreaText">Description per Area</string>
+    <string name="buttonSymptomIntensityPerDateText">Symptom Through Time</string>
+    <string name="app_description">Best app for tracking your health!</string>
     <string-array name="repeating_array">
         <item>Minutes</item>
         <item>Hours</item>

@@ -29,11 +29,10 @@ public class DBHelper extends SQLiteOpenHelper {
     static final String SELECT_ALL_SYMPTOM_DESCRIPTIONS ="SELECT " + Schema.DESCRIPTION + " FROM " + Schema.TABLE_SYMPTOMS_DESCRIPTIONS;
 
     static final String CREATE_TABLE_SYMPTOMS = "CREATE TABLE " + Schema.TABLE_SYMPTOMS +
-            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.DATE + " TEXT," + Schema.MONTH + " TEXT," + Schema.YEAR + " TEXT," + Schema.INTENSITY + " INTEGER);";
+            " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.AREA + " TEXT," + Schema.DESCRIPTION + " TEXT," + Schema.DATE + " TEXT," + Schema.INTENSITY + " INTEGER);";
     static final String DROP_TABLE_SYMPTOMS = "DROP TABLE IF EXISTS " + Schema.TABLE_SYMPTOMS;
     static final String SELECT_ALL_SYMPTOMS = "SELECT " + Schema.ID + "," + Schema.AREA + "," + Schema.DESCRIPTION + ","+ Schema.DATE + ","
-            + Schema.MONTH + "," + Schema.YEAR + "," +
-            Schema.INTENSITY + " FROM " + Schema.TABLE_SYMPTOMS;
+            +Schema.INTENSITY + " FROM " + Schema.TABLE_SYMPTOMS;
 
     static final String CREATE_TABLE_BODY_LOGS = "CREATE TABLE " + Schema.TABLE_BODY_LOGS +
             " (" + Schema.ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + Schema.WEIGHT + " REAL," + Schema.HEART_RATE + " INTEGER," + Schema.BLOOD_SUGAR + " REAL,"+ Schema.UPPER_PRESSURE + " INTEGER,"+ Schema.LOWER_PRESSURE + " INTEGER,"+ Schema.PICTURE_DATE + " TEXT);";
@@ -138,8 +137,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.DESCRIPTION,symptom.getDescription());
         contentValues.put(Schema.INTENSITY,symptom.getIntensity());
         contentValues.put(Schema.DATE,symptom.getDate());
-        contentValues.put(Schema.MONTH,symptom.getMonth());
-        contentValues.put(Schema.YEAR,symptom.getYear());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         writableDatabase.insert(Schema.TABLE_SYMPTOMS,Schema.AREA,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
         writableDatabase.close();
@@ -227,10 +224,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 String area = taskCursor.getString(1);
                 String description = taskCursor.getString(2);
                 String date = taskCursor.getString(3);
-                String month = taskCursor.getString(4);
-                String year = taskCursor.getString(5);
-                int intensity = taskCursor.getInt(6);
-                symptoms.add(new Symptom(area,description,intensity,ID,date,month,year));
+                int intensity = taskCursor.getInt(4);
+                symptoms.add(new Symptom(area,description,intensity,date,ID));
             }while(taskCursor.moveToNext());
         }
         taskCursor.close();

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -28,7 +29,6 @@
         android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
         <uses-feature
             android:name="android.hardware.camera"
@@ -52,6 +52,7 @@
         <activity android:name=".CameraLogsActivity" />
 
         <receiver android:name=".OnAlarmReceiver" />
+
         <service android:name=".ReminderService" />
 
         <provider
@@ -82,7 +83,11 @@
             android:name=".TherapyReminder"
             android:label="@string/title_activity_therapy_reminder"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".InsertReminder"></activity>
+        <activity android:name=".InsertReminder" />
+        <activity android:name=".BodyStatistics" />
+        <activity android:name=".SymptomStatistics" />
+        <activity android:name=".SymptomsThroughTime" />
+        <activity android:name=".DescriptionPerArea"></activity>
     </application>
 
 </manifest>
