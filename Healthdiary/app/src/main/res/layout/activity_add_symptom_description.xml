@@ -35,10 +35,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lLDescriptionInput"
+        android:layout_above="@+id/rlAddDescription"
         android:layout_alignLeft="@+id/lLDescriptionInput"
         android:layout_alignStart="@+id/lLDescriptionInput">
     </ListView>
     <RelativeLayout
+        android:id="@+id/rlAddDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

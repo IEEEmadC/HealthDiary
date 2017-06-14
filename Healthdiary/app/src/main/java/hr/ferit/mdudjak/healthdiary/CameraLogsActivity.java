@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,8 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
         this.ibAddCameraLog.setOnClickListener(this);
         this.lvCameraLogs = (ListView) this.findViewById(R.id.lvCameraLogs);
         ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
-        mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
+        Collections.reverse(cameraLogs);
+        mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs,this);
         this.lvCameraLogs.setAdapter(mCameraLogsAdapter);
         this.lvCameraLogs.setOnItemClickListener(this);
         this.lvCameraLogs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
@@ -197,7 +199,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
                     mCameraLog = new CameraLog(mURL, mDate);
                     DBHelper.getInstance(getApplicationContext()).insertCameraLog(mCameraLog);
                     ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
-                    mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs);
+                    mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs,this);
                     this.lvCameraLogs.setAdapter(mCameraLogsAdapter);
                     this.galleryAddPic(mFileName);
                     Intent startingIntent = this.getIntent();

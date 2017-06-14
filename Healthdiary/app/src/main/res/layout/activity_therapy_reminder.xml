@@ -19,12 +19,21 @@
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        android:id="@+id/lRemindersHistory"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+    android:id="@+id/lRemindersHistory"
+    android:layout_width="fill_parent"
+    android:layout_margin="@dimen/padding"
+    android:padding="@dimen/padding"
+    android:layout_height="fill_parent"/>
+
     <TextView android:id="@+id/txNoReminders"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/sideMarginForLogTextViews"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/redColorforNumber"
+        android:textSize="@dimen/titleSize"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:visibility="gone"
         android:text="@string/no_reminders"/>
 </LinearLayout>

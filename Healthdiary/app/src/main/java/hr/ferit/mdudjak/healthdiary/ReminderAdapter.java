@@ -1,6 +1,7 @@
 package hr.ferit.mdudjak.healthdiary;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -129,6 +131,14 @@ public class ReminderAdapter extends BaseAdapter {
         Boolean b = AppTypeDetails.getInstance(mContext).getToggleStatus(position);
         Log.e("ToggleStatus",b.toString());
         reminderViewHolder.aSwitch.setChecked(b);
+
+        TypedArray ta1 = mContext.getResources().obtainTypedArray(R.array.remainder_backgrounds);
+        int[] backgrounds = new int[ta1.length()];
+        for (int i = 0; i < ta1.length(); i++) {
+            backgrounds[i] = ta1.getColor(i, 0);
+        }
+        reminderViewHolder.relativeLayout.setBackgroundColor(backgrounds[position % 2]);
+        ta1.recycle();
         return convertView;
     }
 
@@ -142,12 +152,14 @@ public class ReminderAdapter extends BaseAdapter {
     static class ReminderViewHolder {
         TextView tvTitle, tvDescription, tvPubDate,tvRepeating;
         Switch aSwitch;
+        RelativeLayout relativeLayout;
         public ReminderViewHolder (View reminderView) {
             this.tvTitle = (TextView) reminderView.findViewById(R.id.tvReminderTitle);
             this.tvDescription = (TextView) reminderView.findViewById(R.id.tvReminderDescription);
             this.tvPubDate= (TextView) reminderView.findViewById(R.id.tvReminderDate);
             this.aSwitch= (Switch) reminderView.findViewById(R.id.reminderSwitch);
             this.tvRepeating = (TextView) reminderView.findViewById(R.id.tvReminderRepeatingValue);
+            this.relativeLayout = (RelativeLayout) reminderView.findViewById(R.id.rlReminderItem);
         }
     }
 }

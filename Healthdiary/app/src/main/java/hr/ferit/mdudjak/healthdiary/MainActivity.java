@@ -30,7 +30,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private static final String finalUrl = "http://www.healthline.com/rss/health-news";
-    private static final String tipsUrl = "http://feeds.feedburner.com/quotationspage/qotd";
+    private static final String tipsUrl = "http://fetchrss.com/rss/593c45318a93f81c178b4567307273900.xml";
     ListView lvNews;
     List<String> links,descriptions,titles,pubDates,images;
     private HandleXML obj;
@@ -58,19 +58,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 final int mNumberOfItems = tipsObj.getmNumberOfItems();
                 final List<String> tips = tipsObj.getTips();
-                final List<String> authors = tipsObj.getAuthors();
+                //final List<String> authors = tipsObj.getAuthors();
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Random r = new Random();
                         int mRandomNumber = r.nextInt(mNumberOfItems - 1);
-                        Snackbar snackbar = Snackbar.make(view, tips.get(mRandomNumber) + "\n" + authors.get(mRandomNumber), Snackbar.LENGTH_LONG)
+                        /*
+                       Snackbar snackbar = Snackbar.make(view, tips.get(mRandomNumber) + "\n" + authors.get(mRandomNumber), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null);
                         final View snackbarView = snackbar.getView();
                         final TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
                         tv.setText(tips.get(mRandomNumber) + "\n" + authors.get(mRandomNumber));
                         tv.setHeight(250);
+                        snackbar.show(); */
+                        Snackbar snackbar = Snackbar.make(view, tips.get(mRandomNumber) + "\n" , Snackbar.LENGTH_LONG)
+                                .setAction("Action", null);
+                        final View snackbarView = snackbar.getView();
+                        final TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                        tv.setText("\""+tips.get(mRandomNumber) + '\"' +"\n" );
+                        tv.setHeight(200);
                         snackbar.show();
+
+
                     }
                 });
             }

@@ -70,7 +70,8 @@ public class HandleTipsXML {
 
                         else if(name.equals("description")){
                             if(mNumberOfItems>0) {
-                                sTips.add(text);
+                                String[] lines= text.split("\"");
+                                sTips.add(lines[1]);
                             }
                         }
 

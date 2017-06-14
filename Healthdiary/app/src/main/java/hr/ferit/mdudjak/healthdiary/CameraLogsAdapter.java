@@ -1,10 +1,13 @@
 package hr.ferit.mdudjak.healthdiary;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -17,9 +20,10 @@ import java.util.List;
 
 public class CameraLogsAdapter extends BaseAdapter{
     List<CameraLog> mCameraLogs;
-
-    public CameraLogsAdapter(List<CameraLog> cameraLogs) {
+    Context mContext;
+    public CameraLogsAdapter(List<CameraLog> cameraLogs, Context context) {
         mCameraLogs = cameraLogs;
+        mContext=context;
     }
 
     @Override
@@ -49,8 +53,8 @@ public class CameraLogsAdapter extends BaseAdapter{
             cameraLogsViewHolder = (CameraLogsViewHolder) convertView.getTag();
         }
         CameraLog cameraLogs = this.mCameraLogs.get(position);
-        cameraLogsViewHolder.tvDate.setText(cameraLogs.getPictureDate());
-
+        String lines[] = cameraLogs.getPictureDate().split("\\r?\\n");
+        cameraLogsViewHolder.tvDate.setText(lines[0] + " " + lines[1]);
 
         Picasso.with(parent.getContext())
                 .load(cameraLogs.getPictureURL())
@@ -58,6 +62,7 @@ public class CameraLogsAdapter extends BaseAdapter{
                 .centerCrop()
               //  .rotate(90f)
                 .into(cameraLogsViewHolder.ivImage);
+
         return convertView;
     }
     public void deleteAt(int position) {
@@ -66,11 +71,13 @@ public class CameraLogsAdapter extends BaseAdapter{
     }
 
     static class CameraLogsViewHolder {
-        TextView tvDate;
+        TextView tvDate,tvTitle;
         ImageView ivImage;
+        LinearLayout linearLayout;
         public CameraLogsViewHolder(View newsView) {
             this.tvDate = (TextView) newsView.findViewById(R.id.tvCameraLogDate);
             this.ivImage = (ImageView) newsView.findViewById(R.id.ivCameraLogImage);
+            this.linearLayout = (LinearLayout) newsView.findViewById(R.id.llCameraLogsItem);
         }
     }
 }

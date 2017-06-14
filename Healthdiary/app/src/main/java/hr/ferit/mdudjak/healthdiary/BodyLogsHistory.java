@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BodyLogsHistory extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -29,6 +30,7 @@ public class BodyLogsHistory extends AppCompatActivity implements AdapterView.On
     private void setUpUI() {
         this.lvBodyLogsList = (ListView) this.findViewById(R.id.lvBodyLogsHistory);
         ArrayList<BodyLog> bodyLogs = DBHelper.getInstance(this).getAllBodyLogs();
+        Collections.reverse(bodyLogs);
         this.mBodyLogsAdapter = new BodyLogsAdapter(bodyLogs,getApplicationContext());
         this.lvBodyLogsList.setAdapter(mBodyLogsAdapter);
         this.lvBodyLogsList.setOnItemClickListener(this);
@@ -71,23 +73,24 @@ public class BodyLogsHistory extends AppCompatActivity implements AdapterView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         BodyLog bodyLog = (BodyLog) mBodyLogsAdapter.getItem(position);
 
-        String pictureURL=null;
+        String pictureURL = null;
         ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
-        for(int i=0;i<cameraLogs.size();i++){
-            if(cameraLogs.get(i).getPictureDate().equals(bodyLog.getDate())){
-                pictureURL=cameraLogs.get(i).getPictureURL();
+        for (int i = 0; i < cameraLogs.size(); i++) {
+            if (cameraLogs.get(i).getPictureDate().equals(bodyLog.getDate())) {
+                pictureURL = cameraLogs.get(i).getPictureURL();
                 break;
             }
         }
+        if (pictureURL!=null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pictureURL));
+            List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pictureURL));
-        List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
+                String packageName = resolvedIntentInfo.activityInfo.packageName;
 
-        for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
-            String packageName = resolvedIntentInfo.activityInfo.packageName;
-
-            getApplicationContext().grantUriPermission(packageName, Uri.parse(pictureURL), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                getApplicationContext().grantUriPermission(packageName, Uri.parse(pictureURL), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+            startActivity(intent);
         }
-        startActivity(intent);
     }
 }

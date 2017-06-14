@@ -1,11 +1,15 @@
 package hr.ferit.mdudjak.healthdiary;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -48,18 +52,37 @@ public class BodyLogsAdapter extends BaseAdapter {
         bodyLogsViewHolder.tvDate.setText(bodyLog.getDate());
         String pictureURL=null;
         ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(mContext).getAllCameraLogs();
-        for(int i=0;i<cameraLogs.size();i++){
-            if(cameraLogs.get(i).getPictureDate().equals(bodyLog.getDate())){
-                pictureURL=cameraLogs.get(i).getPictureURL();
+        int j=0;
+        for(j=0;j<cameraLogs.size();j++){
+            if(cameraLogs.get(j).getPictureDate().equals(bodyLog.getDate())){
+                pictureURL=cameraLogs.get(j).getPictureURL();
+                Log.e("Position:", String.valueOf(position));
+                Log.e("Camera log Date:", cameraLogs.get(j).getPictureDate());
+                Log.e("Body log date:",bodyLog.getDate());
                 break;
             }
         }
-        Picasso.with(parent.getContext())
-                .load(pictureURL)
-                .fit()
-                .centerCrop()
-                //.rotate(90f)
-                .into(bodyLogsViewHolder.ivImage);
+//Prvo odrediti
+
+        if (pictureURL!=null) {
+            bodyLogsViewHolder.ivImage.setVisibility(View.VISIBLE);
+            Picasso.with(parent.getContext())
+                    .load(pictureURL)
+                    .fit()
+                    .centerCrop()
+                    .rotate(90f)
+                    .into(bodyLogsViewHolder.ivImage);
+        }
+
+        TypedArray ta1 = mContext.getResources().obtainTypedArray(R.array.backgrounds);
+        int[] backgrounds = new int[ta1.length()];
+        for (int i = 0; i < ta1.length(); i++) {
+            backgrounds[i] = ta1.getColor(i, 0);
+        }
+        bodyLogsViewHolder.relativeLayout.setBackgroundColor(backgrounds[position % 2]);
+        ta1.recycle();
+        int lognumber =mBodyLogs.size()-position;
+        bodyLogsViewHolder.tvTitle.setText("Log number "+lognumber);
         return convertView;
     }
     public void insert(BodyLog bodyLog) {
@@ -71,8 +94,9 @@ public class BodyLogsAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
     public static class ViewHolder {
-        public TextView tvWeight, tvHeartRate, tvBloodSugar, tvBodyPressure,tvDate;
+        public TextView tvWeight, tvHeartRate, tvBloodSugar, tvBodyPressure,tvDate,tvTitle;
         public ImageView ivImage;
+        public RelativeLayout relativeLayout;
         public ViewHolder(View view) {
             tvWeight = (TextView) view.findViewById(R.id.tvBodyLogWeight);
             tvHeartRate= (TextView) view.findViewById(R.id.tvBodyLogHeartRate);
@@ -80,6 +104,8 @@ public class BodyLogsAdapter extends BaseAdapter {
             tvBodyPressure= (TextView) view.findViewById(R.id.tvBodyLogBodyPressure);
             tvDate = (TextView) view.findViewById(R.id.txtBodyLogDate);
             ivImage= (ImageView) view.findViewById(R.id.ivCameraLogImage);
+            relativeLayout = (RelativeLayout) view.findViewById(R.id.rlBodyLog);
+            tvTitle = (TextView) view.findViewById(R.id.tvBodyLogTitle);
         }
     }
 }

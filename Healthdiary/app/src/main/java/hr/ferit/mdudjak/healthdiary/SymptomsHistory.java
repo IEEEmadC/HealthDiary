@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SymptomsHistory extends AppCompatActivity{
 
@@ -25,7 +26,8 @@ public class SymptomsHistory extends AppCompatActivity{
     private void setUpUI() {
         this.lvSymtpomsList = (ListView) this.findViewById(R.id.lvSymptomsHistory);
         ArrayList<Symptom> symptoms = DBHelper.getInstance(this).getAllSymptoms();
-        mSymptomsAdapter = new SymptomsAdapter(symptoms);
+        Collections.reverse(symptoms);
+        mSymptomsAdapter = new SymptomsAdapter(symptoms,this);
         this.lvSymtpomsList.setAdapter(mSymptomsAdapter);
         this.lvSymtpomsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
 

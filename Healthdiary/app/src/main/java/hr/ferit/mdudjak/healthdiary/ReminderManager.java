@@ -31,6 +31,7 @@ public class ReminderManager{
         Intent i = new Intent(mContext, OnAlarmReceiver.class);
         i.putExtra(KEY_ROWID, (long)taskId);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, taskId, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        mAlarmManager.set(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(),pi);
         mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), 1000 * 60 * repeatingTime,pi);
 
     }

@@ -1,9 +1,12 @@
 package hr.ferit.mdudjak.healthdiary;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,7 +18,8 @@ import java.util.ArrayList;
 public class SymptomsAdapter extends BaseAdapter {
 
     private ArrayList<Symptom> mSymptoms;
-    public SymptomsAdapter(ArrayList<Symptom> symptoms) { mSymptoms = symptoms; }
+    Context mContext;
+    public SymptomsAdapter(ArrayList<Symptom> symptoms , Context context) { mSymptoms = symptoms; mContext=context;}
     @Override
     public int getCount() { return this.mSymptoms.size(); }
     @Override
@@ -39,6 +43,24 @@ public class SymptomsAdapter extends BaseAdapter {
         symptomViewHolder.tvDescription.setText(symptom.getDescription());
         symptomViewHolder.tvIntensity.setText(String.valueOf(symptom.getIntensity()));
         symptomViewHolder.tvDate.setText(symptom.getDate());
+
+        TypedArray ta = mContext.getResources().obtainTypedArray(R.array.colors);
+        int[] colors = new int[ta.length()];
+        for (int i = 0; i < ta.length(); i++) {
+            colors[i] = ta.getColor(i, 0);
+        }
+        ta.recycle();
+        symptomViewHolder.tvIntensityColor.setBackgroundColor(colors[symptom.getIntensity()-1]);
+
+        TypedArray ta1 = mContext.getResources().obtainTypedArray(R.array.backgrounds);
+        int[] backgrounds = new int[ta1.length()];
+        for (int i = 0; i < ta1.length(); i++) {
+            backgrounds[i] = ta1.getColor(i, 0);
+        }
+        symptomViewHolder.relativeLayout.setBackgroundColor(backgrounds[position % 2]);
+        ta1.recycle();
+        int lognumber =mSymptoms.size()-position;
+        symptomViewHolder.tvTitle.setText("Log number "+lognumber);
         return convertView;
     }
     public void insert(Symptom symptom) {
@@ -50,12 +72,16 @@ public class SymptomsAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
     public static class ViewHolder {
-        public TextView tvArea, tvDescription, tvIntensity,tvDate;
+        public TextView tvArea, tvDescription, tvIntensity,tvDate, tvIntensityColor, tvTitle;
+        public RelativeLayout relativeLayout;
         public ViewHolder(View symptomView) {
             tvDate= (TextView) symptomView.findViewById(R.id.tvSymptomDate);
             tvArea = (TextView) symptomView.findViewById(R.id.tvSymptomArea);
             tvDescription = (TextView) symptomView.findViewById(R.id.tvSymptomDescription);
             tvIntensity = (TextView) symptomView.findViewById(R.id.tvSymptomIntensity);
+            tvIntensityColor= (TextView) symptomView.findViewById(R.id.txtForColorIntensity);
+            relativeLayout= (RelativeLayout) symptomView.findViewById(R.id.rlItemSypmtom);
+            tvTitle= (TextView) symptomView.findViewById(R.id.tvSymptomTitle);
         }
     }
 }

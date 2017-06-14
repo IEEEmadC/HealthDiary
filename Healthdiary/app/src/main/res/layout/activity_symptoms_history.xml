@@ -11,6 +11,6 @@
     android:id="@+id/lvSymptomsHistory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding"
-    ></ListView>
+    android:layout_margin="@dimen/padding"
+    android:padding="@dimen/padding"></ListView>
 </LinearLayout>

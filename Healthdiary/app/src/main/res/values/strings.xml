@@ -50,9 +50,9 @@
     <string name="welcomeLayoutText">Symptom logs today</string>
     <string name="title_activity_health_institutions">Map</string>
     <string name="LocationRequestDenied">Your location can not be retrieved.</string>
-    <string name="title_activity_therapy_reminder">TherapyReminder</string>
+    <string name="title_activity_therapy_reminder">Health diary</string>
     <string name="menu_insert">Add reminder</string>
-    <string name="no_reminders">No reminders</string>
+    <string name="no_reminders">There are no reminders currently set.</string>
     <string name="titleOfReminder">Title of task</string>
     <string name="body">Description of task</string>
     <string name="dateofReminder">Date</string>
