@@ -15,9 +15,10 @@ public class Utils{
         if(c != null)
         {
             ConnectivityManager connec = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+            //Class that answers queries about the state of network connectivity. It also notifies applications when network connectivity changes
             try {
                 android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
+                //Describes the status of a network interface.
                 android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
                 if (wifi.isConnected()||mobile.isConnected())

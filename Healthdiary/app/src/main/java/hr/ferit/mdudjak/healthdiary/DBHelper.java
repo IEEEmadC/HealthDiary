@@ -138,7 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.INTENSITY,symptom.getIntensity());
         contentValues.put(Schema.DATE,symptom.getDate());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        writableDatabase.insert(Schema.TABLE_SYMPTOMS,Schema.AREA,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.insert(Schema.TABLE_SYMPTOMS,Schema.AREA,contentValues);
         writableDatabase.close();
     }
 
@@ -159,7 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.LOWER_PRESSURE,bodyLog.getLowerPressure());
         contentValues.put(Schema.PICTURE_DATE,bodyLog.getDate());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        writableDatabase.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.insert(Schema.TABLE_BODY_LOGS,Schema.WEIGHT,contentValues);
         writableDatabase.close();
     }
 
@@ -168,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.PICTURE_PATH,cameraLog.getPictureURL());
         contentValues.put(Schema.PICTURE_DATE,cameraLog.getPictureDate());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        writableDatabase.insert(Schema.TABLE_CAMERA_LOGS,Schema.PICTURE_DATE,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.insert(Schema.TABLE_CAMERA_LOGS,Schema.PICTURE_DATE,contentValues);
         writableDatabase.close();
     }
 
@@ -179,7 +179,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(Schema.REPEATING,reminder.getRepeatingTime());
         contentValues.put(Schema.DATETIME,reminder.getDateTime());
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        writableDatabase.insert(Schema.TABLE_REMINDERS,Schema.DATETIME,contentValues);  //Provjeriti columnHack, je li pametno ID staviti na null?
+        writableDatabase.insert(Schema.TABLE_REMINDERS,Schema.DATETIME,contentValues);
         writableDatabase.close();
     }
 

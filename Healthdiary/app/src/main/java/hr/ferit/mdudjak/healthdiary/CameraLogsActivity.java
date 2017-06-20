@@ -141,7 +141,6 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -152,14 +151,9 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
             } else {
 
                 // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
         else{
@@ -199,6 +193,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
                     mCameraLog = new CameraLog(mURL, mDate);
                     DBHelper.getInstance(getApplicationContext()).insertCameraLog(mCameraLog);
                     ArrayList<CameraLog> cameraLogs = DBHelper.getInstance(this).getAllCameraLogs();
+                    Collections.reverse(cameraLogs);
                     mCameraLogsAdapter = new CameraLogsAdapter(cameraLogs,this);
                     this.lvCameraLogs.setAdapter(mCameraLogsAdapter);
                     this.galleryAddPic(mFileName);
@@ -246,7 +241,7 @@ public class CameraLogsActivity extends AppCompatActivity implements View.OnClic
 
     private void galleryAddPic(String fileName) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File newfile = new File("Android/data/hr.ferit.mdudjak.healthdiary/files/Pictures/" + fileName+".jpg");
+        File newfile = new File(mURL+ fileName+".jpg");
         Uri contentUri = Uri.fromFile(newfile);
         List<ResolveInfo> resolvedIntentActivities = getApplicationContext().getPackageManager().queryIntentActivities(mediaScanIntent, PackageManager.MATCH_DEFAULT_ONLY);
 

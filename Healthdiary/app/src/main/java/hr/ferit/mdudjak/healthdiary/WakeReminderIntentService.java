@@ -12,7 +12,7 @@ import android.os.PowerManager;
 public abstract class WakeReminderIntentService extends IntentService {
     abstract void doReminderWork(Intent intent);
 
-    public static final String LOCK_NAME_STATIC = "com.dummies.android.taskreminder.Static";
+    public static final String LOCK_NAME_STATIC = "hr.ferit.mdudjak.healthdiary";
     private static PowerManager.WakeLock lockStatic = null;
 
     public static void acquireStaticLock(Context context) {

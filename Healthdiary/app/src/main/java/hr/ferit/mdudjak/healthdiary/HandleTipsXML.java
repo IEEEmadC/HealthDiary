@@ -98,8 +98,8 @@ public class HandleTipsXML {
                     URL url = new URL(urlString);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-                    conn.setReadTimeout(3000 /* milliseconds */);
-                    conn.setConnectTimeout(4000 /* milliseconds */);
+                    conn.setReadTimeout(1000 /* milliseconds */);
+                    conn.setConnectTimeout(1000 /* milliseconds */);
                     conn.setRequestMethod("GET");
                     conn.setDoInput(true);
 

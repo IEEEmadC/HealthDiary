@@ -91,8 +91,10 @@ public class BodyLogActivity extends AppCompatActivity implements View.OnClickLi
                                             "Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
+                                                    historyIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(historyIntent);
                                                     dialog.cancel();
+                                                    finish();
                                                 }
                                             });
 

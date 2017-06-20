@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.setUpFloatingButton();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        this.setUpUI();
+    }
+
     private void setUpFloatingButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if(Utils.connectivity(getApplicationContext()))
@@ -58,20 +64,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 final int mNumberOfItems = tipsObj.getmNumberOfItems();
                 final List<String> tips = tipsObj.getTips();
-                //final List<String> authors = tipsObj.getAuthors();
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Random r = new Random();
                         int mRandomNumber = r.nextInt(mNumberOfItems - 1);
-                        /*
-                       Snackbar snackbar = Snackbar.make(view, tips.get(mRandomNumber) + "\n" + authors.get(mRandomNumber), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null);
-                        final View snackbarView = snackbar.getView();
-                        final TextView tv = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-                        tv.setText(tips.get(mRandomNumber) + "\n" + authors.get(mRandomNumber));
-                        tv.setHeight(250);
-                        snackbar.show(); */
                         Snackbar snackbar = Snackbar.make(view, tips.get(mRandomNumber) + "\n" , Snackbar.LENGTH_LONG)
                                 .setAction("Action", null);
                         final View snackbarView = snackbar.getView();
@@ -79,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         tv.setText("\""+tips.get(mRandomNumber) + '\"' +"\n" );
                         tv.setHeight(200);
                         snackbar.show();
-
-
                     }
                 });
             }
@@ -102,12 +97,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.txConnectivity = (TextView) this.findViewById(R.id.txConnectivity);
         this.txConnectionTimeout= (TextView) this.findViewById(R.id.txConnectionTimeout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); //Set a Toolbar to act as the ActionBar for this Activity window.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //DrawerLayout acts as a top-level container for window content that allows for interactive "drawer" views to be pulled out from one or both vertical edges of the window.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //to tie together the functionality of DrawerLayout and the framework ActionBar to implement the recommended design for navigation drawers
         drawer.setDrawerListener(toggle);
+        //ActionBarDrawerToggle can be used directly as a DrawerLayout.DrawerListener
         toggle.syncState();
+        //Synchronize the state of the drawer indicator/affordance with the linked DrawerLayout.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         StringBuilder stringBuilder = new StringBuilder();
@@ -140,13 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String dateNow = String.valueOf(stringBuilder1);
         for(i=0;i<symptoms.size();i++){
             String date = symptoms.get(i).getDate();
-            Log.e("date",symptoms.get(i).getDate());
             String lines[] = date.split("\\r?\\n");
-            Log.e("Druga linija",lines[1]);
             if(lines[1].equals(dateNow)){
                 br++;
             }
-            Log.e("Razlika", String.valueOf(dateNow.compareTo(lines[1])));
         }
         this.txNumberOfSymptomLogs.setText(String.valueOf(br));
     }
@@ -158,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
         obj = new HandleXML(finalUrl);
         obj.fetchXML();
+
         while(obj.parsingComplete);
         if(obj.getsFailedMessage().equals("OK")) {
         links=obj.getLinks();
@@ -215,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -251,6 +248,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        //Close the specified drawer by animating it out of view.
+        //Push object to x-axis position at the start of its container, not changing its size.
         return true;
     }
 }

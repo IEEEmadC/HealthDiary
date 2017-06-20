@@ -73,7 +73,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-
         //Check if Google Play Services Available or not
         if (!CheckGooglePlayServices()) {
             Log.d("onCreate", "Finishing test case since Google Play Services are not available");
@@ -105,8 +104,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         }
         return true;
     }
-
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -129,6 +126,9 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
+            else{
+                checkLocationPermission();
+            }
         }
         else {
             buildGoogleApiClient();
@@ -139,7 +139,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
             String Pharmacy = "pharmacy";
             @Override
             public void onClick(View v) {
-                Log.d("onClick", "Button is Clicked");
                 mMap.clear();
                 String url = getUrl(latitude, longitude, Pharmacy);
                 Object[] DataTransfer = new Object[2];
@@ -156,7 +155,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
             String Hospital = "hospital";
             @Override
             public void onClick(View v) {
-                Log.d("onClick", "Button is Clicked");
                 mMap.clear();
                 String url = getUrl(latitude, longitude, Hospital);
                 Object[] DataTransfer = new Object[2];
@@ -192,6 +190,11 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         }
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googlePlacesUrl.append("location=" + latitude + "," + longitude);
@@ -203,10 +206,7 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
         return (googlePlacesUrl.toString());
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
 
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -309,8 +309,6 @@ public class HealthInstitutions extends FragmentActivity implements OnMapReadyCa
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
         }
     }
 

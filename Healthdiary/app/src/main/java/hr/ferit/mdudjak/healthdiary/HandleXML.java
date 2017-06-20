@@ -22,6 +22,7 @@ public class HandleXML {
     private String urlString = null;
     List links,titles,descriptions,pubdates,images;
     private XmlPullParserFactory xmlFactoryObject;
+    //This class is used to create implementations of XML Pull Parser defined in XMPULL V1 API. Usef for creating new Instance of XmlPullParser class.
     private String sFailedMessage="OK";
     public volatile boolean parsingComplete = true;
 
@@ -59,18 +60,21 @@ public class HandleXML {
             event = myParser.getEventType();
 
             while (event != XmlPullParser.END_DOCUMENT) {
+                //No more events are available
                 String name=myParser.getName();
-
+                //When namespace processing is disabled, the raw name is returned
                 switch (event){
                     case XmlPullParser.START_TAG:
+                        //An XML start tag was read.
                         break;
 
                     case XmlPullParser.TEXT:
+                        //Text content was read
                         text = myParser.getText();
                         break;
 
                     case XmlPullParser.END_TAG:
-
+                        //An end tag was read
                         if(name.equals("title")){
                             titles.add(text);
                         }
@@ -83,19 +87,16 @@ public class HandleXML {
                             String[] descriptionText = text.split("<p>|</p>");
                             String[] strings = text.split("\"");
                             for (String string: strings) {
-                                Log.i("STR", "string : " + string);
+
                                 String[] newString = string.split("/");
                                 for (String a: newString) {
                                     if (a.equals("images")){  //in your question pix or other words
-                                        Log.i("URL", "Image Url is : " + string);
                                         images.add(string);
-
                                     }
                                 }
                             }
                             int i=0;
                             for (String string: descriptionText) {
-                                Log.i("DESC", "desc : " + string);
                                 if(i++==1)
                                 descriptions.add(string);
                             }
@@ -112,7 +113,7 @@ public class HandleXML {
                 event = myParser.next();
             }
 
-            parsingComplete = false;
+           parsingComplete = false;
         }
 
         catch (Exception e) {
@@ -128,9 +129,9 @@ public class HandleXML {
                 try {
                     URL url = new URL(urlString);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                    conn.setReadTimeout(3000 /* milliseconds */);
-                    conn.setConnectTimeout(4000 /* milliseconds */);
+                    //For HTTP Requests
+                    conn.setReadTimeout(1000 /* milliseconds */);
+                    conn.setConnectTimeout(1000 /* milliseconds */);
                     conn.setRequestMethod("GET");
                     conn.setDoInput(true);
 
@@ -142,6 +143,7 @@ public class HandleXML {
                     XmlPullParser myparser = xmlFactoryObject.newPullParser();
 
                     myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                    //This feature determines whether the parser processes namespaces. (xmlns)
                     myparser.setInput(stream, null);
 
                     parseXMLAndStoreIt(myparser);
