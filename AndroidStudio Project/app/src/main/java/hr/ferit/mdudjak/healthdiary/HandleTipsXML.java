@@ -59,7 +59,7 @@ public class HandleTipsXML {
                     case XmlPullParser.END_TAG:
 
                         if(name.equals("item")){
-                          mNumberOfItems++;
+                            mNumberOfItems++;
                         }
 
                         if(name.equals("title")){
@@ -70,8 +70,7 @@ public class HandleTipsXML {
 
                         else if(name.equals("description")){
                             if(mNumberOfItems>0) {
-                                String[] lines= text.split("\"");
-                                sTips.add(lines[1]);
+                                sTips.add(text);
                             }
                         }
 
@@ -98,8 +97,8 @@ public class HandleTipsXML {
                     URL url = new URL(urlString);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-                    conn.setReadTimeout(1000 /* milliseconds */);
-                    conn.setConnectTimeout(1000 /* milliseconds */);
+                    conn.setReadTimeout(3000 /* milliseconds */);
+                    conn.setConnectTimeout(6000 /* milliseconds */);
                     conn.setRequestMethod("GET");
                     conn.setDoInput(true);
 
@@ -118,8 +117,8 @@ public class HandleTipsXML {
                 }
 
                 catch (Exception e) {
-                sFailedMessage= String.valueOf(R.string.connectionTimeoutMessage);
-                parsingComplete=false;
+                    sFailedMessage= String.valueOf(R.string.connectionTimeoutMessage);
+                    parsingComplete=false;
                 }
             }
         });

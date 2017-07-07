@@ -12,4 +12,6 @@ Some examples of statistics the application will run are: logged events over tim
 In addition to data records, the application has the ability to enter the schedule of taking medication. 
 The schedule consists of the date and time for taking the medicine and the description of the medicine that you need to take. 
 The application will use alarm or reminder to remind the user when it's time to take the therapy.
-Also, the application contain an informative part in terms of the displaying Healthcare institutions and pharmacies on Google Maps.
+Also, the application contains an informative part in terms of the displaying Healthcare institutions and pharmacies on Google Maps.
+
+PROMO VIDEO LINK: https://youtu.be/GiC_vSf5EEg 
